@@ -1,0 +1,28 @@
+{
+  "identity": {
+    "name": "Redwood",
+    "parameters": {
+      "model": "cobblemon:standard",
+      "skin": {
+        "texture": "voyager-flavor:textures/entity/trainer/redwood.png"
+      }
+    }
+  },
+  "interaction": {
+    "type": "dialogue",
+    "lines": [
+      {
+        "text": "Redwood: You're finally awake! That was quite a fall...",
+        "next": "line2"
+      },
+      {
+        "id": "line2",
+        "text": "Redwood: Our equipment is scattered. Take this device.",
+        "action": {
+          "type": "command",
+          "value": "ftbquests open_book @p"
+        }
+      }
+    ]
+  }
+}

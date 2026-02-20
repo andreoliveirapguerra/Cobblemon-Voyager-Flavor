@@ -1,0 +1,19 @@
+{
+  "itemGroup.voyager-flavor.general": "Voyager Region",
+
+  "item.voyager-flavor.pion_badge": "Pion Badge",
+  "item.voyager.pion.desc": "Received from the Pion Gym Leader.",
+
+  "item.voyager-flavor.gemini_badge": "Gemini Badge",
+  "item.voyager.gemini.desc": "Received from the Gemini Gym Leaders.",
+
+  "item.voyager-flavor.antares_badge": "Antares Badge",
+  "item.voyager.antares.desc": "Received from the Antares Gym Leader.",
+
+  "item.voyager-flavor.andromeda_badge": "Andromeda Badge",
+  "item.voyager.andromeda.desc": "Received from the Andromeda Gym Leader.",
+
+  "item.voyager.artifact.desc": "An strange and unknown artifact. Seems harmless...",
+
+  "npc.redwood.name": "Professor Redwood"
+}

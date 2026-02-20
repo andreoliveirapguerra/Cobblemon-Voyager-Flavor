@@ -1,0 +1,11 @@
+{
+  "hitbox": "player",
+  "names": [
+    "npc.redwood.name"
+  ],
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:redwood_chat"
+  },
+  "canDespawn": false
+}

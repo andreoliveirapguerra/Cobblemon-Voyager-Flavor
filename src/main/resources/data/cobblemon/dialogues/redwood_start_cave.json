@@ -1,0 +1,23 @@
+{
+  "initializationAction": "c.npc.set_chatting();",
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "'Professor Redwood'"
+      },
+      "face": "q.npc.face();"
+    }
+  },
+  "pages": [
+    {
+      "id": "greeting",
+      "speaker": "npc",
+      "lines": ["Hey, you're finally awake!", "Remember what Happened? We were at the gym, then it all started shaking",
+        "and the ground suddenly collapsed!",
+        "Your father is injured, we need to find a way out quickly!",
+        "See you next time!"],
+      "input": "q.dialogue.close();"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "aprimorando_os_equipamentos"
+	group: "60AEB58798DD02D3"
+	id: "00BCEC68D4DA9564"
+	order_index: 2
+	quest_links: [ ]
+	quests: [{
+		dependencies: ["1E78917A5751A98D"]
+		id: "4AC026F4954401CD"
+		rewards: [
+			{
+				count: 15
+				id: "57C3AA1F4EEA1ACC"
+				item: {
+					count: 1
+					id: "cobblemon:ultra_ball"
+				}
+				type: "item"
+			}
+			{
+				id: "00E1742F7B87AB43"
+				type: "xp_levels"
+				xp_levels: 5
+			}
+		]
+		tasks: [{
+			id: "499B5A33D477BE5D"
+			type: "custom"
+		}]
+		x: 0.0d
+		y: 0.0d
+	}]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "cobblemon:redwood",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:standard",
+      "model": "cobblemon:default.geo",
+      "texture": "cobblemon:textures/npcs/redwood/redwood64x64.png",
+      "layers": []
+    }
+  ]
+}

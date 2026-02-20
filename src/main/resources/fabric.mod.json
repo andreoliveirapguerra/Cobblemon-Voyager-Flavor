@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "voyager-flavor",
+	"version": "0.21",
+	"name": "Voyager Flavor",
+	"description": "Adds Quests and And lore (W.I.P)",
+	"authors": [
+		"HungryJesus"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/voyager-flavor/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "com.voyager.edition.VoyagerFlavor",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "com.voyager.edition.VoyagerFlavorClient",
+				"adapter": "kotlin"
+			}
+		],
+		"fabric-datagen": [
+			{
+				"value": "com.voyager.edition.VoyagerFlavorDataGenerator",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}

@@ -1,0 +1,97 @@
+{
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.cave_cleared = c.player.tags.contains('voyager_cave_cleared');",
+    "v.met_redwood = c.player.tags.contains('voyager_met_redwood');",
+    "v.landing_page = v.cave_cleared ? 'ready_to_leave' : (v.met_redwood ? 'survival_tips' : 'crash_landing');"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "literal",
+        "text": "Prof. Redwood"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "crash_landing",
+      "speaker": "npc",
+      "lines": [
+        "You're finally awake! That was quite a fall...",
+        "Our equipment is scattered, and the local fauna is aggressive."
+      ],
+      "input": {
+        "type": "option",
+        "options": [
+          {
+            "text": "Where are we?",
+            "action": "q.dialogue.set_page('give_quest');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "give_quest",
+      "speaker": "npc",
+      "lines": [
+        "I'm not sure yet. Take this device, it will track our objectives.",
+        "Secure the cave by battling wild Pokémon, then report back to me."
+      ],
+      "input": {
+        "type": "option",
+        "options": [
+          {
+            "text": "[Take Device]",
+            "action": [
+              "c.server.run_command('ftbquests open_book ' + q.player.username);",
+              "c.player.tags.add('voyager_met_redwood');",
+              "q.dialogue.close();"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "survival_tips",
+      "speaker": "npc",
+      "lines": [
+        "Keep your head down, Voyager.",
+        "Check your Quest Book. Defeat the Pokémon in this cave so we can move out safely."
+      ],
+      "input": "q.dialogue.close();"
+    },
+    {
+      "id": "ready_to_leave",
+      "speaker": "npc",
+      "lines": [
+        "Incredible! You handled those Pokémon perfectly.",
+        "I've managed to triangulate a nearby settlement with a healing station. Ready to teleport out of here?"
+      ],
+      "input": {
+        "type": "option",
+        "options": [
+          {
+            "text": "Yes, get me out of here!",
+            "action": [
+              "c.server.run_command('voyager rescue ' + q.player.username);",
+              "q.dialogue.close();"
+            ]
+          },
+          {
+            "text": "I need a minute to prepare.",
+            "action": "q.dialogue.close();"
+          }
+        ]
+      }
+    }
+  ]
+}

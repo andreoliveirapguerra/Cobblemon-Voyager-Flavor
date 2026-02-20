@@ -1,0 +1,196 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'maven-publish'
+	id "org.jetbrains.kotlin.jvm" version "2.3.10"
+}
+
+java {
+	// This tells Gradle to automatically find or download JDK 21
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+//architectury {
+//	platformSetupLoomConfigs()
+//	fabric()
+//}
+
+repositories {
+	// Standard Maven Central
+	mavenCentral()
+
+	maven { url = "https://maven.impactdev.net/repository/maven-public/" }
+
+	// Sonatype Snapshots
+	maven {
+		url = "https://oss.sonatype.org/content/repositories/snapshots"
+	}
+
+	maven { url "https://www.cursemaven.com" }
+
+	// Modrinth (for many modern Fabric mods)
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+		// Remove the content block for now to ensure it's not blocking the fetch
+	}
+
+	// TerraformersMC (for things like EMI/REI or Trinkets)
+	maven {
+		url = "https://maven.terraformersmc.com/"
+	}
+
+	// Architectury & FTB (Required for FTB Quests)
+	maven {
+		url = "https://maven.architectury.dev/"
+	}
+
+	// Saps.dev (Often needed for FTB dependencies)
+	maven {
+		url = "https://maven.saps.dev/releases"
+	}
+
+	// JitPack (Commonly used for GitHub-hosted mods like Cobblemon Quests Extended)
+	maven {
+		url = "https://jitpack.io"
+	}
+
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"voyager-flavor" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+
+}
+
+fabricApi {
+	configureDataGeneration {
+		it = true
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	// Only ONE mappings declaration – layered with Parchment
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:2024.11.17@zip")  // ← update date if needed
+	}
+
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
+	// Cobblemon
+//	modImplementation "maven.modrinth:cobblemon:${project.cobblemon_version}"
+//	modImplementation "maven.modrinth:cobblemon:${project.cobblemon_version}"
+	modImplementation "maven.modrinth:cobblemon:kF7CvxTo"
+
+	// FTB Quests
+	modImplementation "curse.maven:ftb-quests-fabric-438496:7429015"
+
+	// Cobblemon Quests Reloaded
+	modImplementation "curse.maven:cobblemon-quest-reloaded-1389481:7540818"
+
+	// Architectury API (latest stable)
+	modImplementation "dev.architectury:architectury-fabric:${project.architectury_version}"
+
+	// FTB Library
+	modImplementation "curse.maven:ftb-library-fabric-438495:7420411"
+
+	// FTB Teams (confirm latest file ID on CurseForge if error persists)
+	modImplementation "curse.maven:ftb-teams-fabric-438497:7369020"
+
+	modImplementation "teamreborn:energy:4.1.0"
+
+	// Coblemon Trainers API
+	modImplementation "maven.modrinth:CBfM2yw7:C4VTuik1"
+
+	//coblemon trainer
+//	modImplementation "maven.modrinth:lRwTUnD7:bsUShmbG"
+
+	// Coblemon Structures https://modrinth.com/mod/cobblemonextrastructures/version/4E9dJQRB
+	modImplementation "maven.modrinth:IkJ2gbjT:4E9dJQRB"
+
+//	modImplementation "maven.modrinth:forge-config-api-port:v21.1.6-1.21.1-Fabric"
+
+	modImplementation "maven.modrinth:fPetb5Kh:1.21.1-2.2.7-fabric"
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": inputs.properties.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+}
+
+tasks.withType(KotlinCompile).all {
+	kotlinOptions {
+		jvmTarget = 21
+	}
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+	inputs.property "archivesName", project.base.archivesName
+
+	from("LICENSE") {
+		rename { "${it}_${inputs.properties.archivesName}"}
+	}
+}
+
+// configure the maven publication
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			artifactId = project.archives_base_name
+			from components.java
+		}
+	}
+
+	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	repositories {
+		// Add repositories to publish to here.
+		// Notice: This block does NOT have the same function as the block in the top level.
+		// The repositories here will be used for publishing your artifact, not for
+		// retrieving dependencies.
+	}
+}

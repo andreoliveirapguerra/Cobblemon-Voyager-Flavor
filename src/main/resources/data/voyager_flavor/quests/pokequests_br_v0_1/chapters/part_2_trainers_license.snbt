@@ -1,0 +1,58 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "part_2_trainers_license"
+	group: "5F651AD427E13714"
+	id: "647592E5B78595BF"
+	order_index: 1
+	quest_links: [ ]
+	quests: [{
+		dependencies: ["5D365F5371DBA1F2"]
+		id: "2AE2ADA411D1F050"
+		rewards: [
+			{
+				count: 5
+				id: "2E2DD1CBD4CCF268"
+				item: {
+					count: 1
+					id: "cobblemon:great_ball"
+				}
+				type: "item"
+			}
+			{
+				id: "6A46C0349929E108"
+				type: "xp"
+				xp: 1740
+			}
+		]
+		tasks: [{
+			action: "catch"
+			amount: 1L
+			aspects: ""
+			biome: ""
+			dex_progress: "seen"
+			dimension: ""
+			form: ""
+			gender: ""
+			held_items: ""
+			id: "51DFAD2B46C3CCB3"
+			max_level: 15
+			max_turns: 0
+			min_level: 0
+			moves: ""
+			natures: ""
+			poke_ball_used: ""
+			pokemon: ""
+			pokemon_type: ""
+			raid_tiers: ""
+			region: ""
+			shiny: false
+			time_max: 24000L
+			time_min: 0L
+			trainers: ""
+			type: "cobblemon_tasks:cobblemon_task"
+		}]
+		x: -4.5d
+		y: 0.0d
+	}]
+}

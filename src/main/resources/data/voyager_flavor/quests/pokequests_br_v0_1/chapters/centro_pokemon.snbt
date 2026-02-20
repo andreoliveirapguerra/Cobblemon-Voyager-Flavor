@@ -1,0 +1,46 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "centro_pokemon"
+	group: "60AEB58798DD02D3"
+	id: "58A1C501761F7F4A"
+	order_index: 1
+	quest_links: [ ]
+	quests: [{
+		dependencies: ["1E78917A5751A98D"]
+		id: "596917DE36EA5A76"
+		rewards: [
+			{
+				count: 10
+				id: "2E67E78C8731EB38"
+				item: {
+					count: 1
+					id: "cobblemon:super_potion"
+				}
+				type: "item"
+			}
+			{
+				count: 5
+				id: "14B7331FB36F238D"
+				item: {
+					count: 1
+					id: "cobblemon:revive"
+				}
+				type: "item"
+			}
+			{
+				id: "260E328D8F38A331"
+				type: "xp_levels"
+				xp_levels: 3
+			}
+		]
+		tasks: [{
+			advancement: "cobblemon:healing_machine"
+			criterion: ""
+			id: "19A4B9B2FC7D86B0"
+			type: "advancement"
+		}]
+		x: -0.5d
+		y: 0.5d
+	}]
+}

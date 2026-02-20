@@ -1,0 +1,34 @@
+{
+	chapter.00BCEC68D4DA9564.title: "Aprimorando os equipamentos!"
+	chapter.1E78917A5751A98D.title: "Mestre Pokemon Parte 1"
+	chapter.58A1C501761F7F4A.title: "Centro Pokemon"
+	chapter.5D365F5371DBA1F2.chapter_subtitle: ["An earthquake traps you in a cave. Choose your starter and begin your journey in the Andromeda region!"]
+	chapter.5D365F5371DBA1F2.title: "Início Da Jornada!"
+	chapter.647592E5B78595BF.title: "Companheiros de Aventura!"
+	chapter_group.5F651AD427E13714.title: "Prologue"
+	chapter_group.60AEB58798DD02D3.title: "Para Ser um Mestre Pokemon!"
+	quest.2AE2ADA411D1F050.quest_desc: ["Capture seu primeiro Pokemon!"]
+	quest.2AE2ADA411D1F050.quest_subtitle: "(Capturar Pokemon Abaixo do Nv.15!)"
+	quest.4079C3736CCA11B3.quest_desc: ["Derrote 10 Pokemons de nível baixo para aumentar o nível do seu pokemon inicial!"]
+	quest.4079C3736CCA11B3.title: "Tutorial de Batalha!"
+	quest.5911D2C4CBF1EB77.quest_subtitle: "Escolha seu primeiro pokemon. Escolha com sabedoria pois não há como voltar atrás!"
+	quest.5911D2C4CBF1EB77.title: "Uma escolha difícil!"
+	quest.596917DE36EA5A76.quest_desc: ["Leve seus Pokemons a um centro pokemon e utilize a máquina de cura"]
+	quest.5B761473D231A03F.title: "Mestre Aprendiz: Grama"
+	quest.698AC60411C5AF6F.quest_desc: ["Capture 10 pokemons tipo fogo"]
+	reward.00E1742F7B87AB43.title: "Lv Up +5"
+	reward_table.4C702667A14A57D7.title: "BadgeReward"
+	task.0803401E6BBFD972.title: "X"
+	task.19A4B9B2FC7D86B0.title: "Aprendendo a Cuidar"
+	task.21280549FE94B86C.title: "Aprendiz de Treinador: Fogo"
+	task.226AD313D0F79A98.title: "Mestre Aprendiz: Insetos"
+	task.239B77639111762A.title: "Capturar 10 Tipos Grama"
+	task.357D930E1991C26F.title: "Escape the cave!"
+	task.394A0B0CB0CBE8F8.title: "Mestre Aprendiz: Voador"
+	task.3C1940A3870DC0AA.title: "a"
+	task.499B5A33D477BE5D.title: "Conclua As missões de Aprendiz de Mestre"
+	task.51DFAD2B46C3CCB3.title: "Rumo ao mestre Pokemon!"
+	task.6919E6B162F97311.title: "Andromeda Awakening"
+	task.6DBBD818FAA16557.title: "Mestre Aprendiz: Água"
+	task.7D1A6BF3AA811715.title: "Mestre Aprendiz: Terra"
+}
