@@ -1,0 +1,54 @@
+{
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      }
+    },
+    "player": {
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "grant_license",
+      "lines": [
+        "Aqui está, Cadete. Sua Licença de Treinador e sua Badge Box.",
+        "Você agora é oficialmente um representante da Academia de Keitai na superfície."
+      ],
+      "input": {
+        "type": "option",
+        "options": [
+          {
+            "text": "Obrigado, Professor. Qual o meu próximo objetivo?",
+            "action": "q.dialogue.set_page('next_objective');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "next_objective",
+      "lines": [
+        "Vá para a Rota 1. Há relatos de distorções magnéticas perto do primeiro Ginásio.",
+        "Mas cuidado... Dax, o cadete da Unidade de Contenção, também foi enviado para lá.",
+        "Ele é competitivo e não gosta de ser superado. Ele estará vigiando seu progresso."
+      ],
+      "input": {
+        "type": "option",
+        "options": [
+          {
+            "text": "Dax? Eu posso lidar com ele.",
+            "action": [
+              "c.player.tags.add('voyager_ch2_started');",
+              "q.dialogue.close();"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

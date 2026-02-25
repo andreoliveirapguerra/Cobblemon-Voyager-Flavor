@@ -1,11 +1,11 @@
 {
   "hitbox": "player",
   "names": [
-    "npc.redwood.name"
+    "npc.dax.name"
   ],
   "interaction": {
     "type": "dialogue",
-    "dialogue": "cobblemon:redwood_main"
+    "dialogue": "cobblemon:ellie_chat"
   },
   "canDespawn": false
 }

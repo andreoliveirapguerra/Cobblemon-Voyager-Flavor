@@ -1,15 +1,15 @@
 {
 	"schemaVersion": 1,
 	"id": "voyager-flavor",
-	"version": "0.21",
+	"version": "0.42.52",
 	"name": "Voyager Flavor",
 	"description": "Adds Quests and And lore (W.I.P)",
 	"authors": [
 		"HungryJesus"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://www.curseforge.com/members/hungryjesus/",
+		"sources": "https://github.com/andreoliveirapguerra/Cobblemon-Voyager-Flavor"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/voyager-flavor/icon.png",

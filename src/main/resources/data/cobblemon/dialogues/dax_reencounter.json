@@ -1,0 +1,134 @@
+{
+  "startPage": "hub",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.won = q.player.has_tag('voyager_won_dax');",
+    "v.landing_page = v.won ? 'chat_lost' : 'chat_won' "
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "hub",
+      "speaker": "npc",
+      "lines": ["..."],
+      "input": "q.dialogue.set_page(v.landing_page);"
+    },
+    {
+      "id": "reencounter",
+      "speaker": "npc",
+      "lines": ["hm...."],
+      "input": [
+        "v.callback_dialogue = 'redwood_intro';",
+        "c.npc.run_action_effect('change_dialogue_callback');",
+        "q.dialogue.set_page(v.landing_page);"
+      ]
+    },
+    {
+      "id": "chat_lost",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Que? Você de novo ' + q.player.username + '?'"
+        },
+        "Não aprendeu sua lição já? Volte para sua casa e desista da academia.",
+        "Você não leva jeito para isso"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Sua vitória não significa nada.",
+            "action": "q.dialogue.set_page('part2');"
+          },
+          {
+            "text": "Estou mais forte. Não perderei para mais ninguém!",
+            "action": "q.dialogue.set_page('part2');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "chat_won",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Que? Você de novo ' + q.player.username + '?'"
+        },
+        "Aquela vitória deve ter lhe subido a cabeça se acha que ainda merece essa licença.",
+        "Devolva logo ela para o professor e saia da academia em silêncio. Moleque perdedor."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Fala grande para quem teve uma derrota ainda maior!",
+            "action": "q.dialogue.set_page('part2');"
+          },
+          {
+            "text": "Então acho que vou ter que te provar novamente porque tenho a licença.",
+            "action": "q.dialogue.set_page('part2');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "part2",
+      "speaker": "npc",
+      "lines": [
+        "Urgh... Gente como você que não sabe seu lugar é quem mais me irrita!",
+        "Dessa vez vou destruir o seu espírito para você desistir de uma vez por todas!"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Pode vir!",
+            "value": "battle",
+            "action": [
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_dax2 ');",
+              "q.dialogue.close();",
+              "q.npc.start_battle(q.player, 'single');"
+            ]
+          },
+          {
+            "text": "Battle x2",
+            "value": "battle",
+            "action": [
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_dax2 ');",
+              "q.dialogue.close();",
+              "q.npc.start_battle(q.player, 'double');"
+            ]
+          },
+
+          {
+            "text": "Agora não.",
+            "value": "cancel",
+            "action": [
+              "q.dialogue.close();"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Rival Dax",
+  "battleFormat": "GEN_9_SINGLES",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1.0,
+      "switchBias": 0.5,
+      "itemBias": 1.0,
+      "maxSelectMargin": 0.1
+    }
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 2
+    }
+  ],
+  "team": [
+    {
+      "species": "staravia",
+      "gender": "MALE",
+      "level": 20,
+      "nature": "jolly",
+      "ability": "intimidate",
+      "moveset": [
+        "quickattack",
+        "wingattack",
+        "doubleteam",
+        "endeavor"
+      ],
+      "ivs": { "hp": 25, "atk": 25, "def": 25, "spa": 25, "spd": 25, "spe": 25 },
+      "evs": { "atk": 100, "spe": 100 }
+    },
+    {
+      "species": "luxio",
+      "gender": "MALE",
+      "level": 21,
+      "nature": "adamant",
+      "ability": "intimidate",
+      "moveset": [
+        "spark",
+        "bite",
+        "charge",
+        "roar"
+      ],
+      "ivs": { "hp": 25, "atk": 25, "def": 25, "spa": 25, "spd": 25, "spe": 25 },
+      "evs": { "atk": 100, "spe": 100 }
+    },
+    {
+      "species": "crocalor",
+      "gender": "MALE",
+      "level": 22,
+      "nature": "modest",
+      "ability": "blaze",
+      "heldItem": "cobblemon:sitrus_berry",
+      "moveset": [
+        "incinerate",
+        "bite",
+        "round",
+        "yawn"
+      ],
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 150, "spa": 100 }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "startPage": "hub",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.met = q.player.has_tag('voyager_met_dax');",
+    "v.landing_page = v.met ? 'reencounter' : 'meeting'"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "hub",
+      "speaker": "npc",
+      "lines": ["..."],
+      "input": "q.dialogue.set_page(v.landing_page);"
+    },
+    {
+      "id": "reencounter",
+      "speaker": "npc",
+      "lines": ["hmm...?"],
+      "input": [
+        "v.callback_dialogue = 'dax_reencounter';",
+        "c.npc.run_action_effect('change_dialogue_callback');",
+        "q.dialogue.close();"
+      ]
+    },
+    {
+      "id": "meeting",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Hum, então você é o tal ' + q.player.username + '?'"
+        },
+        "Não me parece grande coisa. Acho que o Prof. Redwood está perdendo o toque para reconhecer talentos se você é o melhor que a Academia tem a oferecer."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Quem é você para falar assim?",
+            "action": "q.dialogue.set_page('dax_identity');"
+          },
+          {
+            "text": "O Professor confia em mim. Isso é o que importa.",
+            "action": "q.dialogue.set_page('dax_identity');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dax_identity",
+      "speaker": "npc",
+      "lines": [
+        "Sou Dax, da Unidade de Contenção de Keitai. Eu não brinco de treinador, eu neutralizo ameaças do Ultra-Vazio.",
+        "Mas bem, vou lhe fazer um favor e dar o privilégio de testar suas 'habilidades' contra um profissional de verdade!"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Pode vir!",
+            "value": "battle",
+            "action": [
+              "q.npc.start_battle(q.player, 'single');",
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_dax');",
+              "q.dialogue.close();"
+            ]
+          },
+          {
+            "text": "Battle x2",
+            "value": "battle",
+            "action": [
+              "q.npc.start_battle(q.player, 'double');",
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_dax');",
+              "q.dialogue.close();"
+            ]
+          },
+
+          {
+            "text": "Agora não.",
+            "value": "cancel",
+            "action": [
+              "q.dialogue.close();"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

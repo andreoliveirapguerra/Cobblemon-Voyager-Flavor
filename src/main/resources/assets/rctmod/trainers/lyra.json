@@ -1,0 +1,86 @@
+{
+  "name": "Arquiteta Lyra",
+  "battleFormat": "GEN_9_SINGLES",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1.0,
+      "statMoveBias": 0.4,
+      "itemBias": 1.0,
+      "maxSelectMargin": 0.05
+    }
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "klefki",
+      "gender": "FEMALE",
+      "level": 29,
+      "nature": "bold",
+      "ability": "prankster",
+      "moveset": [
+        "spikes",
+        "thunderwave",
+        "foulplay",
+        "dazzlinggleam"
+      ],
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 252, "def": 128, "spd": 128 }
+    },
+    {
+      "species": "bronzong",
+      "gender": "GENDERLESS",
+      "level": 30,
+      "nature": "relaxed",
+      "ability": "levitate",
+      "moveset": [
+        "gyroball",
+        "extrasensory",
+        "confuseray",
+        "irondefense"
+      ],
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 0 },
+      "evs": { "hp": 252, "def": 252 }
+    },
+    {
+      "species": "malamar",
+      "gender": "FEMALE",
+      "level": 30,
+      "nature": "adamant",
+      "ability": "contrary",
+      "moveset": [
+        "superpower",
+        "psychocut",
+        "nightslash",
+        "hypnosis"
+      ],
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "atk": 252, "spe": 252 }
+    },
+    {
+      "species": "hypno",
+      "gender": "FEMALE",
+      "level": 32,
+      "nature": "calm",
+      "ability": "insomnia",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "hypnosis",
+        "dreameater",
+        "shadowball",
+        "nastyplot"
+      ],
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 252, "spd": 252 }
+    }
+  ]
+}

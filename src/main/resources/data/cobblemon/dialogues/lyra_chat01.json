@@ -1,0 +1,78 @@
+{
+  "startPage": "meeting",
+  "initializationAction": [
+    "c.npc.set_chatting();"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "meeting",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "Pare por um momento, Cadete. Consegue ouvir? Além do zumbido mecânico desses geradores de Redstone... há um silêncio que grita."
+        },
+        "O Professor Redwood e a Academia ensinam você a 'conter' e 'catalogar'. Mas eles nunca lhe ensinaram a pedir perdão, não é?"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": false,
+        "options": [
+          {
+            "text": "Quem é você?",
+            "action": "q.dialogue.set_page('lyra_introduction');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lyra_introduction",
+      "speaker": "npc",
+      "lines": [
+        "Meu nome é Lyra. E o que você chama de 'progresso', eu chamo de cicatriz. Cada fenda que se abre no céu de Keitai não é um acidente... é o universo tentando respirar através do asfalto que vocês impuseram.",
+        "As Ultra Beasts que vocês caçam como monstros... elas são apenas os anticorpos de uma realidade que estamos infectando."
+      ],
+      "input": "q.dialogue.set_page('philosophy_challenge');"
+    },
+    {
+      "id": "philosophy_challenge",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "Diga-me, {q.player.username}... Se o seu Pokémon pudesse escolher entre a sua Pokébola tecnológica e a liberdade do Ultra-Vazio, você teria coragem de abrir a trava?"
+        },
+        "Não... eu vejo nos seus olhos. Você ainda é um prisioneiro da ordem. Deixe-me mostrar a beleza que existe no caos do subconsciente."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Defender a Academia [Batalhar]",
+            "action": [
+              "q.dialogue.close();",
+              "q.npc.start_battle(q.player, 'single');"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

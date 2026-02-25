@@ -1,0 +1,13 @@
+{
+  "name": "cobblemon:ellie",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:standard",
+      "model": "cobblemon:default.geo",
+      "texture": "cobblemon:textures/npcs/ellie/nurse_ellie.png",
+      "layers": []
+    }
+  ]
+}

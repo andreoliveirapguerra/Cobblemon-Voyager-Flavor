@@ -1,11 +1,11 @@
 {
   "hitbox": "player",
   "names": [
-    "npc.redwood.name"
+    "npc.joy.name"
   ],
   "interaction": {
     "type": "dialogue",
-    "dialogue": "cobblemon:redwood_main"
+    "dialogue": "cobblemon:joy_chat"
   },
   "canDespawn": false
 }

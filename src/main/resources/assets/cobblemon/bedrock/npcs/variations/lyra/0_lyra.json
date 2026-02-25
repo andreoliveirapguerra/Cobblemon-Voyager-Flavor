@@ -1,0 +1,13 @@
+{
+  "name": "cobblemon:lyra",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:standard",
+      "model": "cobblemon:female_with_buns.geo",
+      "texture": "cobblemon:textures/npcs/lyra/lyra100x64.png",
+      "layers": []
+    }
+  ]
+}

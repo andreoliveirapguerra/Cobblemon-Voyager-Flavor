@@ -1,0 +1,35 @@
+{
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:dax_initial_chat"
+  },
+  "battleConfiguration": {
+    "canChallenge": true,
+    "winCommands": [
+      "pokedollars give @p 7580",
+      "give %player% minecraft:rare_candy 5",
+      "msg %player% §c[Dax] §fInaceitável... Meus cálculos de vantagem falharam?!"
+    ],
+    "lossCommands": [
+      "msg %player% §c[Dax] §fEficiência é tudo. Volte para a Academia, cadete."
+    ]
+  },
+  "skill": 5,
+  "party": {
+    "type": "pool",
+    "minPokemon": 3,
+    "maxPokemon": 6,
+    "isStatic": false,
+    "pool": [
+      { "pokemon": "magnemite", "weight": 10, "npcLevels": "15-30" },
+      { "pokemon": "fletchinder", "weight": 10, "npcLevels": "15-40" },
+      { "pokemon": "corvisquire", "weight": 10, "npcLevels": "15-40" },
+      { "pokemon": "luxio", "weight": 10, "npcLevels": "15-50" },
+      { "pokemon": "gabite", "weight": 8, "npcLevels": "15-60" },
+      { "pokemon": "magneton", "weight": 10, "npcLevels": "10-60" },
+      { "pokemon": "metagross", "weight": 5, "npcLevels": "25-100" },
+      { "pokemon": "lucario", "weight": 7, "npcLevels": "10-100" },
+      { "pokemon": "nihilego", "weight": 2, "npcLevels": "10-100" }
+    ]
+  }
+}

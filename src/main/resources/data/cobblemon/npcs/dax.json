@@ -1,0 +1,24 @@
+{
+  "hitbox": "player",
+  "names": [
+    "npc.dax.name"
+  ],
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:dax_initial_chat"
+  },
+  "canDespawn": false,
+  "battleConfiguration": {
+    "canChallenge": true
+  },
+  "skill": 5,
+  "party": {
+    "type": "simple",
+    "pokemon": [
+      "magnemite level=14 pokeball=heavy_ball ability=sturdy nature=modest moves=thundershock,tackle,supersonic,thunderwave hp_iv=25 attack_iv=25 defence_iv=25 special_attack_iv=25 special_defence_iv=25 speed_iv=25 hp_ev=85 special_attack_ev=85",
+      "pawniard level=15 pokeball=heavy_ball ability=defiant nature=adamant moves=scratch,leer,furycutter,metalclaw hp_iv=25 attack_iv=25 defence_iv=25 special_attack_iv=25 special_defence_iv=25 speed_iv=25 hp_ev=85 attack_ev=85",
+      "elekid level=16 pokeball=heavy_ball ability=static nature=jolly moves=quickattack,leer,thundershock,lowkick hp_iv=25 attack_iv=25 defence_iv=25 special_attack_iv=25 special_defence_iv=25 speed_iv=25 attack_ev=85 speed_ev=85",
+      "aron level=18 pokeball=heavy_ball held_item=cobblemon:oran_berry ability=sturdy nature=adamant moves=tackle,metalclaw,rocktomb,roar hp_iv=31 attack_iv=31 defence_iv=31 special_attack_iv=31 special_defence_iv=31 speed_iv=31 hp_ev=150 attack_ev=106"
+    ]
+  }
+}

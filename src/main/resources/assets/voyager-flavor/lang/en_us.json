@@ -15,5 +15,10 @@
 
   "item.voyager.artifact.desc": "An strange and unknown artifact. Seems harmless...",
 
-  "npc.redwood.name": "Professor Redwood"
+  "npc.redwood.name": "Professor Redwood",
+  "npc.dax.name": "Rival Dax",
+  "npc.joy.name": "Nurse Joy",
+  "npc.ellie.name": "Nurse Ellie",
+  "npc.vance.name": "Captain Vance",
+  "npc.lyra.name": "Arquiteta do Team Hypnos Lyra"
 }

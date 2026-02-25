@@ -1,0 +1,108 @@
+{
+  "startPage": "v.landing_page",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.won = q.player.has_tag('voyager_won_vance');",
+    "v.landing_page = v.won ? 'greeting' : 'post_battle';"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "greeting",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Ah, então você é o novato ' + q.player.username + ' que recebeu a licença do Professor Redwood?'"
+        },
+        "A maior honra para um cadete da academia é servir como guardião, protegendo os cidadãos e treinadores das anomalias."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Estou aqui para provar minha força e conseguir minha primeira insígnia.",
+            "action": "q.dialogue.set_page('challenge');"
+          },
+          {
+            "text": "Eu já enfrentei criaturas na caverna, dou conta do recado.",
+            "action": "q.dialogue.set_page('challenge');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "challenge",
+      "speaker": "npc",
+      "lines": [
+        "Palavras são fáceis. Aqui na fronteira, o que conta é a força do seu parceiro Pokémon e a sua estratégia no campo de batalha.",
+        "Vejamos se tem potencial pra se tornar um defensor contra as anomalias!"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Pode vir com tudo, Capitão!",
+            "value": "battle",
+            "action": [
+              "q.dialogue.close();",
+              "q.npc.start_battle(q.player, 'single');"
+            ]
+          },
+          {
+            "text": "Pode vir em dobro",
+            "value": "battle",
+            "action": [
+              "q.dialogue.close();",
+              "q.npc.start_battle(q.player, 'double');"
+            ]
+          },
+          {
+            "text": "Espere, preciso curar meus Pokémon antes.",
+            "action": "q.dialogue.close();"
+          }
+        ]
+      }
+    },
+    {
+      "id": "post_battle",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Sua força é real, ' + q.player.username + '. Você provou ser um verdadeiro guardião.'"
+        },
+        "A Insígnia que você conquistou não é apenas um troféu, é uma autorização. Agora você tem permissão para explorar além dos muros. Mantenha a guarda alta!"
+      ],
+      "input": {
+        "type": "option",
+        "options": [
+          {
+            "text": "[Fechar]",
+            "action": [
+              "q.dialogue.close();",
+              "q.run_command('give ' + q.player.username + ' voyager-flavor:pion_badge 1');"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

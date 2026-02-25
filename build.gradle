@@ -130,6 +130,14 @@ dependencies {
 	// Coblemon Trainers API
 	modImplementation "maven.modrinth:CBfM2yw7:C4VTuik1"
 
+//	// RCT mod
+//	modImplementation "maven.modrinth:rctmod:bsUShmbG"
+//
+//	implementation "com.electronwill.night-config:core:3.8.3"
+
+	// RCT mod dependency (FORGE API PORT)
+//	modImplementation "maven.modrinth:forge-config-api-port:v21.1.6-1.21.1-Fabric"
+
 	//coblemon trainer
 //	modImplementation "maven.modrinth:lRwTUnD7:bsUShmbG"
 

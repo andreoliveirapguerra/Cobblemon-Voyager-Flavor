@@ -1,0 +1,13 @@
+{
+  "name": "cobblemon:dax",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:standard",
+      "model": "cobblemon:default.geo",
+      "texture": "cobblemon:textures/npcs/dax/dax.png",
+      "layers": []
+    }
+  ]
+}

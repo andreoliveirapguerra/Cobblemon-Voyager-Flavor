@@ -1,0 +1,26 @@
+{
+  "hitbox": "player",
+  "names": [
+    "npc.lyra.name"
+  ],
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:lyra_chat01"
+  },
+  "battleConfiguration": {
+    "canChallenge": true
+  },
+  "canDespawn": false,
+  "autoHealParty": false,
+  "skill": 10,
+  "party": {
+    "type": "simple",
+    "pokemon": [
+      "glameow level=24 pokeball=ultra_ball ability=sturdy nature=modest moves=thundershock,tackle,supersonic,thunderwave hp_iv=25 attack_iv=25 defence_iv=25 special_attack_iv=25 special_defence_iv=25 speed_iv=25 hp_ev=85 special_attack_ev=85",
+      "arbok level=25 pokeball=ultra_ball ability=defiant nature=adamant moves=scratch,leer,furycutter,metalclaw hp_iv=25 attack_iv=25 defence_iv=25 special_attack_iv=25 special_defence_iv=25 speed_iv=25 hp_ev=85 attack_ev=85",
+      "hypnos level=26 pokeball=ultra_ball ability=forewarn nature=jolly moves=hypnosis,psybeam,psychic,disable hp_iv=25 attack_iv=25 defence_iv=25 special_attack_iv=25 special_defence_iv=25 speed_iv=25 attack_ev=85 speed_ev=85",
+      "Audino level=38 pokeball=heal_ball held_item=cobblemon:oran_berry ability=sturdy nature=adamant moves=sing,metalclaw,rocktomb,confusion hp_iv=31 attack_iv=31 defence_iv=31 special_attack_iv=31 special_defence_iv=31 speed_iv=31 hp_ev=150 attack_ev=106"
+    ]
+  }
+
+}

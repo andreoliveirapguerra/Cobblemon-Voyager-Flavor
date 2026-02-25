@@ -1,0 +1,106 @@
+{
+  "startPage": "greeting",
+  "initializationAction": [
+    "c.npc.set_chatting();"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "greetings",
+      "speaker": "npc",
+      "lines": [
+        "Olá! Bem vindo ao maravilhoso mundo de Pokemon!"
+      ],
+      "input": "q.dialogue.set_page('briefing');"
+    },
+    {
+      "id": "briefing",
+      "speaker": "npc",
+      "lines": [
+        "Você ja conhece o que são Pokemons?"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": false,
+        "options": [
+          {
+            "text": "Não.",
+            "action": "q.dialogue.set_page('explaining');"
+          },
+          {
+            "text": "Sim.",
+            "action": "q.dialogue.set_page('good_luck');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "explaining",
+      "speaker": "npc",
+      "lines": [
+        "Esse mundo é habitado por criaturas maravilhosas chamadas de POKEMON!",
+        "Para algumas pessoas, POKEMON são pets. Outros usam para batalhar.",
+        "Eu...Eu estudo POKEMON como uma profissão. Primeiramente, qual o seu nome?"
+      ],
+      "input": "q.dialogue.set_page('explain_pt2');"
+    },
+    {
+      "id": "explain_pt2",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Entendo, então seu nome é '+ q.player.username +'?'"
+        }
+      ],
+      "input": [
+        "q.run_command('voyager spawnRival ' + q.player.username);",
+        "q.dialogue.set_page('rival_intro');"
+      ]
+    },
+    {
+      "id": "rival_intro",
+      "speaker": "npc",
+      "lines": [
+        "Esse é Dax! Ele é seu rival desde que vocês eram bebês!"
+      ],
+      "input": "q.dialogue.set_page('good_luck');"
+    },
+    {
+      "id": "good_luck",
+      "speaker": "npc",
+      "lines": [
+        "A sua própria lenda Pokemon está preste a se desenrolar!",
+        "Um mundo de sonhos e aventuras o aguarda! Vamos lá!"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Começar Aventura",
+            "action": [
+              "q.run_command('tag ' + q.player.username + ' add voyager_journey_started');",
+              "q.run_command('voyager startGame ' + q.player.username);"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

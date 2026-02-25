@@ -1,0 +1,81 @@
+{
+  "name": "Capitão Vance",
+  "battleFormat": "GEN_9_SINGLES",
+  "ai": {
+    "type": "rct",
+    "data": {
+      "moveBias": 1.0,
+      "itemBias": 1.0,
+      "maxSelectMargin": 0.15
+    }
+  },
+  "bag": [
+    {
+      "item": "cobblemon:potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "magnemite",
+      "gender": "GENDERLESS",
+      "level": 14,
+      "nature": "modest",
+      "ability": "sturdy",
+      "moveset": [
+        "thundershock",
+        "tackle",
+        "supersonic",
+        "thunderwave"
+      ],
+      "ivs": { "hp": 25, "atk": 25, "def": 25, "spa": 25, "spd": 25, "spe": 25 },
+      "evs": { "hp": 85, "spa": 85 }
+    },
+    {
+      "species": "pawniard",
+      "gender": "MALE",
+      "level": 15,
+      "nature": "adamant",
+      "ability": "defiant",
+      "moveset": [
+        "scratch",
+        "leer",
+        "furycutter",
+        "metalclaw"
+      ],
+      "ivs": { "hp": 25, "atk": 25, "def": 25, "spa": 25, "spd": 25, "spe": 25 },
+      "evs": { "hp": 85, "atk": 85 }
+    },
+    {
+      "species": "elekid",
+      "gender": "MALE",
+      "level": 16,
+      "nature": "jolly",
+      "ability": "static",
+      "moveset": [
+        "quickattack",
+        "leer",
+        "thundershock",
+        "lowkick"
+      ],
+      "ivs": { "hp": 25, "atk": 25, "def": 25, "spa": 25, "spd": 25, "spe": 25 },
+      "evs": { "atk": 85, "spe": 85 }
+    },
+    {
+      "species": "aron",
+      "gender": "MALE",
+      "level": 18,
+      "nature": "adamant",
+      "ability": "sturdy",
+      "heldItem": "oran_berry",
+      "moveset": [
+        "tackle",
+        "metalclaw",
+        "rocktomb",
+        "roar"
+      ],
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 150, "atk": 106 }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "cobblemon:joy",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:standard",
+      "model": "cobblemon:default.geo",
+      "texture": "cobblemon:textures/npcs/joy/nurse_joy.png",
+      "layers": []
+    }
+  ]
+}
