@@ -1,0 +1,16 @@
+{
+  "hitbox": "player",
+  "names": [
+    "npc.elias.name"
+  ],
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:elias_main"
+  },
+  "battleConfiguration": {
+    "canChallenge": false
+  },
+  "canDespawn": false,
+  "autoHealParty": false,
+  "skill": 0
+}

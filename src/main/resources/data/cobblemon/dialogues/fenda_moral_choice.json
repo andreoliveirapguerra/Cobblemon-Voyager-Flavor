@@ -1,0 +1,66 @@
+{
+  "startPage": "fenda_aparece",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.chose_order = q.player.has_tag('voyager_moral_order');",
+    "v.chose_chaos = q.player.has_tag('voyager_moral_chaos');",
+    "v.chose = v.chose_order || v.chose_chaos;",
+    "v.landing_page = v.chose ? 'already_chose' : 'fenda_aparece';"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "'Harpy'"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "fenda_aparece",
+      "speaker": "npc",
+      "lines": [
+        "A fenda maior se abriu. Agora você precisa escolher.",
+        "Selar com a Fundação... ou estabilizar com o Hypnos.",
+        "Não existe resposta certa. Existe a que você consegue viver."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Selar com a Fundação [Ordem]",
+            "action": [
+              "q.run_command('voyager moralChoice order ' + q.player.username);",
+              "q.dialogue.close();"
+            ]
+          },
+          {
+            "text": "Estabilizar com Hypnos [Caos]",
+            "action": [
+              "q.run_command('voyager moralChoice chaos ' + q.player.username);",
+              "q.dialogue.close();"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "already_chose",
+      "speaker": "npc",
+      "lines": [
+        "Você já fez sua escolha.",
+        "Viva com ela."
+      ],
+      "input": "q.dialogue.close();"
+    }
+  ]
+}

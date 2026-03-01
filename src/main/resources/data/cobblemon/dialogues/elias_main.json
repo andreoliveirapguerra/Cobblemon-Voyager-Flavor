@@ -1,0 +1,84 @@
+{
+  "startPage": "greeting",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.met = q.player.has_tag('voyager_met_elias');",
+    "v.landing_page = v.met ? 'return' : 'greeting';"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "greeting",
+      "speaker": "npc",
+      "lines": [
+        "Então... você conseguiu descer até aqui usando o Link.",
+        "Eu sou Elias. Antes eu construía as máquinas que hoje nos prendem. Agora eu vivo entre o lixo que elas deixam."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "O que é este lugar?",
+            "action": "q.dialogue.set_page('sector_explain');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sector_explain",
+      "speaker": "npc",
+      "lines": [
+        "O Setor Zero é onde a Fundação joga tudo que não consegue explicar.",
+        "Aqui as fendas nascem sem controle. E aqui você vai precisar disto..."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "[Receber Traje de Proteção]",
+            "action": [
+              "q.run_command('give ' + q.player.username + ' voyager-flavor:anti_radiation_suit 1');",
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_elias');",
+              "q.dialogue.set_page('post_give');"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "post_give",
+      "speaker": "npc",
+      "lines": [
+        "Este traje vai te proteger enquanto você explora mais fundo.",
+        "Cuidado com as anomalias. Elas ficam maiores quanto mais você se aprofunda no Zero."
+      ],
+      "input": "q.dialogue.close();"
+    },
+    {
+      "id": "return",
+      "speaker": "npc",
+      "lines": [
+        "Você voltou. O Zero muda as pessoas... ou revela o que sempre esteve lá.",
+        "O que está procurando desta vez?"
+      ],
+      "input": "q.dialogue.close();"
+    }
+  ]
+}
