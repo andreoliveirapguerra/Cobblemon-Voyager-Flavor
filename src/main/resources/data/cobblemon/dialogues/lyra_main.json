@@ -25,7 +25,7 @@
       "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "[ Lendo dados do jogador... ]"
+        "Você... Eu te conheço de algum lugar?"
       ],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
@@ -35,11 +35,11 @@
       "lines": [
         {
           "type": "expression",
-          "expression": "'Cadete ' + q.player.username + ' se apresentando para a patrulha '"
+          "expression": "'Acho que não, prazer em conhece-lo...'"
         }
       ],
       "input": [
-        "v.callback_dialogue = 'vance_intro';",
+        "v.callback_dialogue = 'lyra_chat01';",
         "c.npc.run_action_effect('change_dialogue_callback');",
         "q.run_script('run_callback_dialogue');",
         "q.dialogue.close();"
@@ -51,11 +51,11 @@
       "lines": [
         {
           "type": "expression",
-          "expression": "'Bem-vindo de volta, Cadete ' + q.player.username + '!'"
+          "expression": "'Ah sim, você é ' + q.player.username + ' o leal cãozinho do Vance...'"
         }
       ],
       "input": [
-        "v.callback_dialogue = 'vance_chat';",
+        "v.callback_dialogue = 'lyra_chat02';",
         "c.npc.run_action_effect('change_dialogue_callback');",
         "q.run_script('run_callback_dialogue');",
         "q.dialogue.close();"

@@ -1,0 +1,132 @@
+{
+  "startPage": "v.landing_page",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.met = q.player.has_tag('voyager_met_lyra');",
+    "v.won = q.player.has_tag('voyager_won_lyra');",
+    "v.landing_page = v.met? 'philosophy_challenge' : 'meeting",
+    "v.landing_page = v.won? 'post_battle' : v.landing_page;"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "meeting",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Pare por um momento, Cadete. Consegue ouvir? Além do zumbido mecânico desses geradores de Redstone... há um silêncio que grita.'"
+        },
+        "O Professor Redwood e a Academia ensinam você a 'conter' e 'catalogar'. Mas eles nunca lhe ensinaram a pedir perdão, não é?"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": false,
+        "options": [
+          {
+            "text": "Quem é você?",
+            "action": [
+              "q.dialogue.set_page('lyra_introduction');",
+              "q.run_command('tag '+q.player.username+' add voyager_met_lyra');"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "artifact_player",
+      "speaker": "player",
+      "lines": [
+        "Quem é você? Estou atrás de um um certo item. Não tenho tempo para conversar"
+      ],
+      "input": [
+        "q.dialogue.set_page('');"
+      ]
+    },
+    {
+      "id": "artifact_lyra",
+      "speaker": "npc",
+      "lines": [
+        "Ah sim, mais um soldado desmiolado. Achei que teria pensamento próprio. Você veio pelo artefato detectado pelo ULTRA-SCANNER certo?",
+        "Eu estou com ele, e posso lhe fazer o favor de lhe entregar. Mas só se você me ouvir antes."
+      ],
+      "input": [
+        "q.dialogue.set_page('lyra_introduction');"
+      ]
+    },
+    {
+      "id": "lyra_introduction",
+      "speaker": "npc",
+      "lines": [
+        "Meu nome é Lyra. E o que você chama de 'progresso', eu chamo de cicatriz. Cada fenda que se abre no céu de Keitai não é um acidente... é o universo tentando respirar através do asfalto que vocês impuseram.",
+        "As Ultra Beasts que vocês caçam como monstros... elas são apenas os anticorpos de uma realidade que estamos infectando."
+      ],
+      "input": "q.dialogue.set_page('philosophy_challenge');"
+    },
+    {
+      "id": "philosophy_challenge",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Diga-me, '+{q.player.name}+'... Se o seu Pokémon pudesse escolher entre a sua Pokébola tecnológica e a liberdade do Ultra-Vazio, você teria coragem de abrir a trava?'"
+        },
+        "Não... eu vejo nos seus olhos. Você ainda é um prisioneiro da ordem. Deixe-me mostrar a beleza que existe no caos do subconsciente."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Não trairei o professor! Entregue o artefato! [Batalhar]",
+            "action": [
+              "q.run_command('tag '+q.player.username+' add voyager_met_lyra');",
+              "q.dialogue.close();",
+              "q.npc.start_battle(q.player, 'single');"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "post_battle",
+      "speaker": "npc",
+      "lines": [
+        "Desapontante...",
+        "Mas promessa é divida. E eu cumpro com minha promessa differente da fundação"
+      ],
+      "input": [
+        "q.dialogue.close();",
+        "v.landing_page = 'goodbye'",
+        "q.run_command('give '+q.player.username+' voyager-flavor:artifact');",
+        "q.dialogue.set_page(v.landing_page);"
+      ]
+    },
+    {
+      "id": "goodbye",
+      "speaker": "npc",
+      "lines": [
+        "Ainda está aqui? Você veio pelo artefato certo?",
+        "Eu ja lhe dei. Agora pode voltar para brincar de soldado..."
+      ],
+      "input": [
+        "q.dialogue.close()"
+      ]
+    }
+  ]
+}
