@@ -1,0 +1,15 @@
+{
+  "providers": [
+    {
+      "_comment": "Bitmap font for VoyagerLorebooks images. Each character in 'chars' maps to one cell of the sprite sheet.",
+      "_usage": "Add texture rows to the PNG and extend the 'chars' rows below. Use \\uE001-\\uE0FF (Unicode Private Use Area).",
+      "type": "bitmap",
+      "file": "voyager-flavor:textures/font/lorebook_sprites.png",
+      "ascent": 7,
+      "height": 16,
+      "chars": [
+        "\uE001\uE002\uE003\uE004\uE005\uE006\uE007\uE008"
+      ]
+    }
+  ]
+}
