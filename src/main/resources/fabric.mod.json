@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "voyager-flavor",
-	"version": "0.44.56",
+	"version": "0.45.57",
 	"name": "Voyager Flavor",
 	"description": "Adds Quests and And lore (W.I.P)",
 	"authors": [

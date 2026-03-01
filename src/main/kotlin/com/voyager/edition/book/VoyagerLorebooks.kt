@@ -8,9 +8,9 @@ import net.minecraft.network.chat.HoverEvent
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.network.Filterable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.Filterable
 import net.minecraft.world.item.component.WrittenBookContent
 
 /**

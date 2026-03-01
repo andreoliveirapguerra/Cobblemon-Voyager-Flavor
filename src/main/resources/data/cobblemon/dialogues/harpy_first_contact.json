@@ -7,12 +7,18 @@
   ],
   "speakers": {
     "npc": {
-      "name": { "type": "literal", "text": "Harpy" },
+      "name": {
+        "type": "expression",
+        "expression": "Harpy"
+      },
       "face": "q.npc.face();"
     },
     "player": {
       "face": "q.player.face();",
-      "name": { "type": "expression", "expression": "q.player.username" }
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
     }
   },
   "pages": [
