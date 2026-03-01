@@ -9,6 +9,8 @@ import com.voyager.edition.event.VoyagerRivalEvents.getLevelDifferenceFromSnapsh
 import com.voyager.edition.utils.VoyagerUtils
 import com.voyager.edition.utils.VoyagerUtils.Companion.findSafeSurfaceSpace
 import com.voyager.edition.utils.VoyagerUtils.Companion.findSafeSurfaceSpot
+import com.voyager.edition.utils.VoyagerUtils.Companion.runCommand
+import com.voyager.edition.utils.VoyagerUtils.Companion.spawnCenterAt
 import com.voyager.edition.utils.VoyagerUtils.Companion.spawnDaxPresetAndEdit
 import com.voyager.edition.utils.VoyagerUtils.Companion.spawnVanceAt
 import com.voyager.edition.utils.VoyagerUtils.Companion.startAdventureEvent
@@ -24,6 +26,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.effect.MobEffects
 import kotlin.text.startsWith
 
 object VoyagerCommands {
@@ -107,7 +110,7 @@ object VoyagerCommands {
                             Commands.argument("target", EntityArgument.player())
                                 .executes { context ->
                                     val target = EntityArgument.getPlayer(context, "target")
-                                    spawnVanceAt(target.serverLevel(), target.blockPosition())
+                                    spawnVanceAt(target, target.blockPosition())
                                     1
                                 }
                         )
@@ -171,9 +174,7 @@ object VoyagerCommands {
                             Commands.argument("target", EntityArgument.player())
                                 .executes { context ->
                                     val target = EntityArgument.getPlayer(context, "target")
-                                    val targetSnapshot = VoyagerFlavor.VoyagerTrainersDatabank!!.trainersList.find { it.name == target.name.string }
-                                    val levelMean = getLevelDifferenceFromSnapshot(target.party(), targetSnapshot!!.partySnapshot!!)
-
+                                    spawnLyraAt(target, target.blockPosition())
                                     1
                                 }
                         )
@@ -181,27 +182,51 @@ object VoyagerCommands {
         )
 
         dispatcher.register(
-                Commands.literal("voyager")
-                    // ... seus outros subcomandos (ex: spawnboss, heal) ...
-
-                    // Novo comando: /voyager gen_structure <namespace:nome>
-                    .then(Commands.literal("gen_structure")
-                        .requires { it.hasPermission(2) } // Requer OP
-                        .then(Commands.argument("structure_id", StringArgumentType.string())
-                            .executes { context -> generateStructureCommand(context) }
+            Commands.literal("voyager")
+                .requires { it.hasPermission(2) } // Only server/operators can run this directly
+                .then(
+                    Commands.literal("spawnCenter")
+                        .then(
+                            Commands.argument("target", EntityArgument.player())
+                                .executes { context ->
+                                    val target = EntityArgument.getPlayer(context, "target")
+                                    spawnCenterAt(context.source.server, target)
+                                    1
+                                }
                         )
-                    )
-            )
+                )
+        )
+
+        dispatcher.register(
+            Commands.literal("voyager")
+                .requires { it.hasPermission(2) } // Only server/operators can run this directly
+                .then(
+                    Commands.literal("triggerLyraEvent")
+                        .then(
+                            Commands.argument("target", EntityArgument.player())
+                                .executes { context ->
+                                    val target = EntityArgument.getPlayer(context, "target")
+//                                    val pos = findSafeSurfaceSpace(target, 1000)
+                                    spawnLyraAt(target, target.blockPosition())
+                                    1
+                                }
+                        )
+                )
+        )
+
 
         dispatcher.register(
                 Commands.literal("voyager")
                     .then(Commands.literal("gen_template") // Mudei o nome para ser mais técnico
                         .requires { it.hasPermission(2) }
                         .then(Commands.argument("template_id", StringArgumentType.greedyString()) // greedyString permite espaços se houver, mas IDs não costumam ter
-                            .executes { context -> generateTemplateCommand(context) }
+                            .executes { context ->
+                                generateTemplateCommand(context)
+                                1
+                            }
                         )
                     )
-            )
+        )
 
         }
 
@@ -237,7 +262,7 @@ object VoyagerCommands {
         val SPAWN_ZUBAT = "pokespawn zubat lvl=3"
         val SPAWN_WOOBAT = "pokespawn woobat lvl=4"
 
-        player.tags.add("voyager_cave_cleared")
+//        player.tags.add("voyager_cave_cleared")
 
         val cmdList = arrayOf(
             SPAWN_WOOBAT, SPAWN_WOOBAT, SPAWN_WOOBAT,
@@ -277,12 +302,21 @@ object VoyagerCommands {
         }
     }
 
-    private fun spawnLyraAt(level: ServerLevel, pos: BlockPos) {
+    private fun spawnLyraAt(player: ServerPlayer, pos: BlockPos) {
+        val level = player.serverLevel()
         val server = level.server
 
         var command = "spawnnpcat ${pos.x} ${pos.y} ${pos.z} lyra"
 
-        val safePos: BlockPos? = findSafeSurfaceSpot(level, pos.x, pos.z)
+        VoyagerFlavor.LOGGER.info("[Voyager] Trying to locate safe spawn for lyra")
+
+        var safePos: BlockPos? = findSafeSurfaceSpace(player, 200)
+
+        if (safePos == null) {
+            VoyagerFlavor.LOGGER.error("[Voyager] Could not find safe spawn")
+            safePos = findSafeSurfaceSpot(player.serverLevel(), player.x.toInt(), player.z.toInt())
+        }
+        VoyagerFlavor.LOGGER.info("[Voyager] Trying to spawn lyra at ${safePos?.x} ${safePos?.y} ${safePos?.z}")
 
         if (safePos != null) {
             command = "spawnnpcat ${safePos.x} ${safePos.y} ${safePos.z} lyra"
@@ -295,6 +329,16 @@ object VoyagerCommands {
                 server.createCommandSourceStack().withSuppressedOutput().withPermission(4),
                 command
             )
+
+            player.sendSystemMessage(
+                Component
+                    .literal("[ULTRA-SCANNER]: Anomalia detectada em ${safePos!!.x} ${safePos.y} ${safePos.z}.")
+                    .withStyle(ChatFormatting.LIGHT_PURPLE)
+            )
+
+            val addLyraEventOngoing = "tag add ${player.name.string} voyager_lyra_event"
+            runCommand(server, addLyraEventOngoing)
+
             VoyagerFlavor.LOGGER.info("Lyra summoned at ${pos.x} ${pos.y} ${pos.z}")
         } catch (e: Exception) {
             VoyagerFlavor.LOGGER.error("Failed to spawn Lyra: ${e.message}")
@@ -347,19 +391,35 @@ object VoyagerCommands {
 
     private fun generateTemplateCommand(context: CommandContext<CommandSourceStack>): Int {
         val source = context.source
-        val player = source.playerOrException
+        val mPlayer = EntityArgument.getPlayer(context, "target")
         val level = source.level
 
         // ID ex: "bca:default/one_off/pokecenter"
-        val templateId = StringArgumentType.getString(context, "template_id")
+//        val templateId = StringArgumentType.getString(context, "template_id")
+        val templateId = "bca:default/one_off/pokecenter"
 
         source.sendSystemMessage(Component.literal("§eBuscando superfície para template: $templateId..."))
+        VoyagerFlavor.LOGGER.info("§eBuscando superfície para template: $templateId...")
+        var success: Boolean
 
-        val success = VoyagerUtils.placeTemplateOnSurface(
-            level,
-            player.blockPosition(),
-            templateId
-        )
+        if (mPlayer != null) {
+            success = VoyagerUtils.placeTemplateOnSurface(
+                level,
+                mPlayer.blockPosition(),
+                templateId
+            )
+        } else {
+            success = VoyagerUtils.placeTemplateOnSurface(
+                level,
+                BlockPos(
+                    source.position.x.toInt(),
+                    source.position.y.toInt(),
+                    source.position.z.toInt()
+                ),
+                templateId
+            )
+        }
+
 
         if (success) {
             source.sendSystemMessage(Component.literal("§aSucesso! Estrutura gerada logo acima/abaixo de você."))
@@ -385,6 +445,38 @@ object VoyagerCommands {
         }
     }
 
+    private fun tpPLayerAndRedwoodToCenter(player: ServerPlayer) {
+        val level = player.serverLevel()
+        val server = level.server
+
+        val healingMachinePos = findHealingMachine(level, VoyagerUtils.centerPosition!!, 200)
+        if (healingMachinePos != null) {
+            val targetX = healingMachinePos.x.toDouble()
+            val targetY = healingMachinePos.y.toDouble() + 1
+            val targetZ = healingMachinePos.z.toDouble()
+
+            val npcTpCommand = "execute as ${player.scoreboardName} at @s run tp @e[type=cobblemon:npc,distance=..10,limit=1,sort=nearest] ${targetX} ${targetY + 2} $targetZ"
+            server.commands.performPrefixedCommand(
+                server.createCommandSourceStack().withSuppressedOutput().withPermission(4),
+                npcTpCommand
+            )
+
+            player.teleportTo(
+                level,
+                targetX,
+                targetY,
+                targetZ,
+                player.yRot,
+                player.xRot
+            )
+            player.sendSystemMessage(Component.literal("§aProf. Redwood: Chegamos! A Estação de Cura está logo aqui."))
+        } else {
+            VoyagerFlavor.LOGGER.error("§[Voyager] Error finding center at ${VoyagerUtils.centerPosition}")
+        }
+
+
+    }
+
     private fun rescuePlayerAlt(player: ServerPlayer) {
         // First send player to forest
 
@@ -401,36 +493,37 @@ object VoyagerCommands {
 
         if (healingMachinePos != null) {
 
-            player.teleportTo(healingMachinePos.x.toDouble() , healingMachinePos.y.toDouble(), healingMachinePos.y.toDouble())
             val safePos = findSafeSurfaceSpace(player, 2)
-            player.teleportTo(safePos!!.x.toDouble(), player.y, player.z)
 
             // Encontrou! Vamos jogar o player bem na frente da máquina
-            val targetX = healingMachinePos.x.toDouble() + 0.5
-            val targetY = healingMachinePos.y.toDouble()
-            val targetZ = healingMachinePos.z.toDouble() + 1.5 // +1.5 Z para não nascer DENTRO da máquina
+            val targetX = healingMachinePos.x.toDouble()
+            val targetY = healingMachinePos.y.toDouble() + 1
+            val targetZ = healingMachinePos.z.toDouble()  // +1.5 Z para não nascer DENTRO da máquina
+
+            VoyagerFlavor.LOGGER.info("Found pokcenter at $targetX, $targetY, $targetZ")
+//            player.teleportTo(safePos!!.x.toDouble(), player.y, player.z)
 
             // 1. TELEPORTAR O PROFESSOR PRIMEIRO
-            val npcTpCommand = "execute as ${player.scoreboardName} at @s run tp @e[type=cobblemon:npc,distance=..10,limit=1,sort=nearest] ${targetX + 1.5} $targetY $targetZ"
+            val npcTpCommand = "execute as ${player.scoreboardName} at @s run tp @e[type=cobblemon:npc,distance=..10,limit=1,sort=nearest] ${targetX} ${targetY + 2} $targetZ"
             server.commands.performPrefixedCommand(
                 server.createCommandSourceStack().withSuppressedOutput().withPermission(4),
                 npcTpCommand
             )
 
             // 2. LIMPAR AS TAGS E EFEITOS DO JOGADOR
-            player.tags.removeIf { it.startsWith("voyager_spawn:") }
-            player.tags.remove("voyager_cave_cleared")
-            player.removeEffect(net.minecraft.world.effect.MobEffects.NIGHT_VISION)
+//            player.tags.removeIf { it.startsWith("voyager_spawn:") }
+//            player.tags.remove("voyager_cave_cleared")
+            player.removeEffect(MobEffects.NIGHT_VISION)
 
             // 3. TELEPORTAR O JOGADOR
-//            player.teleportTo(
-//                level,
-//                targetX,
-//                targetY,
-//                targetZ,
-//                player.yRot,
-//                player.xRot
-//            )
+            player.teleportTo(
+                level,
+                targetX,
+                targetY,
+                targetZ,
+                player.yRot,
+                player.xRot
+            )
 
             spawnProfessor(level, healingMachinePos)
 

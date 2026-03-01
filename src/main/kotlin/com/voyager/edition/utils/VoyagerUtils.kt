@@ -2,20 +2,16 @@ package com.voyager.edition.utils
 
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.CobblemonEntities
-import com.cobblemon.mod.common.api.npc.NPCPartyProvider
 import com.cobblemon.mod.common.api.npc.configuration.NPCBattleConfiguration
 import com.cobblemon.mod.common.api.npc.partyproviders.SimplePartyProvider
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies
 import com.cobblemon.mod.common.api.storage.party.NPCPartyStore
 import com.cobblemon.mod.common.entity.npc.NPCEntity
-import com.cobblemon.mod.common.util.party
 import com.voyager.edition.VoyagerFlavor
-import com.voyager.edition.event.VoyagerRivalEvents.createCustomPokemon
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.StringTag
@@ -29,19 +25,18 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.level.biome.Biome
 import kotlin.text.startsWith
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
-import javax.swing.text.html.parser.Entity
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
 class VoyagerUtils {
     companion object {
+        var centerPosition: BlockPos? = null
         fun spawnProfessor(level: ServerLevel, pos: BlockPos ) {
             val server = level.server
 
@@ -83,10 +78,12 @@ class VoyagerUtils {
             )
         }
 
-        fun spawnVanceAt(level: ServerLevel, pos: BlockPos) {
+        fun spawnVanceAt(player: ServerPlayer, pos: BlockPos) {
+            val level = player.serverLevel()
             val server = level.server
 
             val command = "spawnnpcat ${pos.x} ${pos.y} ${pos.z} vance"
+            VoyagerFlavor.LOGGER.info("[Voyager] Spawning Vance at ${pos.x} ${pos.y} ${pos.z}")
 
             try {
                 server.commands.performPrefixedCommand(
@@ -94,6 +91,12 @@ class VoyagerUtils {
                     command
                 )
                 VoyagerFlavor.LOGGER.info("Cpt. Vance summoned ")
+                player.sendSystemMessage(
+                    Component
+                        .literal("§aVance: Ei Recruta! Estou em ${pos.x} ${pos.y} ${pos.z}.")
+                        .withStyle(ChatFormatting.DARK_AQUA)
+                )
+
             } catch (e: Exception) {
                 VoyagerFlavor.LOGGER.error("Failed to spawn Cap. Vance: ${e.message}")
             }
@@ -388,11 +391,22 @@ class VoyagerUtils {
 
             // 3. Carrega o Preset "dax" e Edita ao mesmo tempo
             configurarNpcDax(npc, player, lvl)
-            val legendary = Random(1000).nextBoolean()
-            val shiny = Random(3).nextBoolean()
+            var legendary = Random(1000).nextBoolean()
+            var shiny = Random(3).nextBoolean()
+            var playerPkmnLevel = 0
+            if (player.name.string.lowercase().contains("pw") ||
+                player.name.string.lowercase().contains("pedabliw") ||
+                player.name.string.lowercase().contains("momoleda")) {
+                VoyagerFlavor.LOGGER.warn("[Voyager] Special Name Detected, HARDCORE RIVAL ENABLED!!!")
+                legendary = true
+                shiny = true
+                playerPkmnLevel = lvl*2
+            } else {
+                playerPkmnLevel = lvl
+            }
             gerarTimeRivalSeguro(
                 npc,
-                lvl,
+                playerPkmnLevel,
                 player,
                 legendary,
                 shiny
@@ -432,7 +446,63 @@ class VoyagerUtils {
             }
         }
 
-        fun gerarTimeRivalSeguro(rival: NPCEntity, lvl: Int, player: ServerPlayer, useLegendaries: Boolean = false, shiny: Boolean) {
+        fun isLegendary(pokemonName: String): Boolean {
+            // Normaliza o nome: tudo minúsculo e remove espaços, hifens e underlines
+            val normalizedName = pokemonName.lowercase()
+                .replace(" ", "")
+                .replace("-", "")
+                .replace("_", "")
+
+            return when (normalizedName) {
+                // --- 1ª Geração (Kanto) ---
+                "articuno", "zapdos", "moltres", "mewtwo", "mew" -> true
+
+                // --- 2ª Geração (Johto) ---
+                "raikou", "entei", "suicune", "lugia", "hooh", "celebi" -> true
+
+                // --- 3ª Geração (Hoenn) ---
+                "regirock", "regice", "registeel", "latias", "latios",
+                "kyogre", "groudon", "rayquaza", "jirachi", "deoxys" -> true
+
+                // --- 4ª Geração (Sinnoh) ---
+                "uxie", "mesprit", "azelf", "dialga", "palkia",
+                "heatran", "regigigas", "giratina", "cresselia",
+                "phione", "manaphy", "darkrai", "shaymin", "arceus" -> true
+
+                // --- 5ª Geração (Unova) ---
+                "victini", "cobalion", "terrakion", "virizion",
+                "tornadus", "thundurus", "reshiram", "zekrom",
+                "landorus", "kyurem", "keldeo", "meloetta", "genesect" -> true
+
+                // --- 6ª Geração (Kalos) ---
+                "xerneas", "yveltal", "zygarde", "diancie", "hoopa", "volcanion" -> true
+
+                // --- 7ª Geração (Alola / Ultra Beasts / Meltan) ---
+                "typenull", "silvally", "tapukoko", "tapulele", "tapubulu", "tapufini",
+                "cosmog", "cosmoem", "solgaleo", "lunala", "necrozma", "magearna",
+                "marshadow", "zeraora", "meltan", "melmetal",
+                    // Ultra Beasts
+                "nihilego", "buzzwole", "pheromosa", "xurkitree", "celesteela",
+                "kartana", "guzzlord", "poipole", "naganadel", "stakataka", "blacephalon" -> true
+
+                // --- 8ª Geração (Galar / Hisui) ---
+                "zacian", "zamazenta", "eternatus", "kubfu", "urshifu", "zarude",
+                "regieleki", "regidrago", "glastrier", "spectrier", "calyrex", "enamorus" -> true
+
+                // --- 9ª Geração (Paldea) ---
+                // (Nota: Pokémon Paradoxo não são tecnicamente lendários pelas regras oficiais,
+                // então listamos apenas as Ruínas, os da DLC e os mascotes)
+                "tinglu", "chienpao", "wochien", "chiyu",
+                "koraidon", "miraidon", "okidogi", "munkidori", "fezandipiti",
+                "ogerpon", "terapagos", "pecharunt" -> true
+
+                // Se não bateu com nenhum dos nomes acima, não é lendário
+                else -> false
+            }
+        }
+
+        fun gerarTimeRivalSeguro(rival: NPCEntity, lvl: Int, player: ServerPlayer, useLegendary: Boolean = true, shiny: Boolean) {
+            VoyagerFlavor.LOGGER.info("[Voyager] Gerar time Rival seguro Lendarios=$useLegendary e Shiny=$shiny")
             var rivalParty = rival.party
             if (rivalParty == null) {
                 rival.party = SimplePartyProvider().provide(rival, lvl)
@@ -452,7 +522,7 @@ class VoyagerUtils {
                 val counterTypeStr = getCounterType(playerType)
 
                 // 1. Filtra espécies implementadas que tenham vantagem de tipo
-                var candidates = PokemonSpecies.implemented.filter { species ->
+                var candidates = PokemonSpecies.species.filter { species ->
                     val pType = species.primaryType.name.lowercase()
                     val sType = species.secondaryType?.name?.lowercase()
 
@@ -461,9 +531,13 @@ class VoyagerUtils {
                 }
 
                 // 2. Lógica para Lendários (opcional)
-                if (useLegendaries) {
-                    val legendaryCandidates = candidates.filter { it.features.contains("legend") }
-                    if (legendaryCandidates.isNotEmpty() && Random.nextBoolean()) {
+                if (useLegendary) {
+                    val legendaryCandidates = candidates.filter {
+                        isLegendary(it.name)
+                    }
+                    VoyagerFlavor.LOGGER.info("[Voyager] Legendary candidates=$legendaryCandidates")
+
+                    if (legendaryCandidates.isNotEmpty()) {
                         candidates = legendaryCandidates
                     }
                 } else {
@@ -477,14 +551,14 @@ class VoyagerUtils {
                 } else {
                     // Fallback: pega qualquer pokémon implementado que não seja lendário (se proibido)
                     PokemonSpecies.implemented.filter {
-                        it.name !in usedSpecies && (useLegendaries || !it.features.contains("legend"))
+                        it.name !in usedSpecies && (useLegendary || !it.features.contains("legend"))
                     }.random()
                 }
 
                 usedSpecies.add(selectedSpecies.name)
 
                 // 4. Definição de Nível
-                val targetLevel = (playerMon.level + if (useLegendaries) 5 else 1).coerceIn(1, 100)
+                val targetLevel = (playerMon.level + if (useLegendary) 5 else 1).coerceIn(1, 100)
 
                 // 5. Construção da String de Propriedades (Usando a sintaxe correta do arquivo .kt)
                 // Nota: PokemonProperties.kt usa "${stat}_iv", então devemos usar nomes completos ou abreviações padrão do mod.
@@ -497,7 +571,7 @@ class VoyagerUtils {
                     append(" nature=random")
                     append(" shiny=$isShiny")
 
-                    if (useLegendaries && selectedSpecies.features.contains("legend")) {
+                    if (useLegendary && selectedSpecies.features.contains("legend")) {
                         append(" held_item=cobblemon:life_orb") // "held_item" é válido
                     }
                 }
@@ -507,6 +581,7 @@ class VoyagerUtils {
                     val props = PokemonProperties.parse(propertiesString)
                     val newPokemon = props.create()
 
+                    VoyagerFlavor.LOGGER.info("Added ${newPokemon.species.name} to Dax's party")
                     rivalParty.add(newPokemon)
 
                     // Log de Debug (Opcional)
@@ -519,6 +594,19 @@ class VoyagerUtils {
             }
         }
 
+        fun completeQuestReward(server: MinecraftServer, playerName: String, questTitle: String) {
+            val command = "ftbquests change_progress $playerName complete $questTitle"
+            runCommand(server, command)
+        }
+
+        fun spawnCenterAt(server: MinecraftServer, player: ServerPlayer) {
+            val pos = findSafeSurfaceSpot(server.getLevel(player.serverLevel().dimension())!!, player.x.toInt(), player.z.toInt())
+            VoyagerFlavor.LOGGER.info("[Voyager] Spawning center at ${pos!!.center}")
+            centerPosition = pos
+            val command = "place template bca:default/one_off/pokecenter ${pos.x} ${pos.y} ${pos.z}"
+            runCommand(server, command)
+        }
+
         fun placeTemplateOnSurface(level: ServerLevel, originPos: BlockPos, templateId: String): Boolean {
             // 1. Parse do ID (ex: "bca:default/one_off/pokecenter")
             val resourceLocation = ResourceLocation.tryParse(templateId)
@@ -527,7 +615,7 @@ class VoyagerUtils {
                 return false
             }
 
-            // 2. Busca o Template no Manager (Isso lê pastas data/namespace/structures/...)
+//             2. Busca o Template no Manager (Isso lê pastas data/namespace/structures/...)
             val templateManager = level.structureManager
             val templateOptional = templateManager.get(resourceLocation)
 
@@ -561,6 +649,8 @@ class VoyagerUtils {
                 .setMirror(Mirror.NONE)
                 .setIgnoreEntities(false) // Carrega os NPCs/Spawners salvos no NBT
 
+
+            VoyagerFlavor.LOGGER.info("Place template $templateId at $centeredPos")
             // 6. Executa a colocação
             val success = template.placeInWorld(
                 level,

@@ -13,6 +13,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.party
 import com.sun.jna.platform.unix.Resource
 import com.voyager.edition.registry.VoyagerTrainerData
+import com.voyager.edition.utils.VoyagerUtils.Companion.completeQuestReward
 import com.voyager.edition.utils.VoyagerUtils.Companion.findSafeSurfaceSpace
 import com.voyager.edition.utils.VoyagerUtils.Companion.runCommand
 import net.fabricmc.fabric.api.event.Event
@@ -46,7 +47,19 @@ object VoyagerRivalEvents {
 
             if (loser.toString().lowercase().contains("dax")) {
                 if (thisServer != null) {
-                    val command = "give ${winner.string} mega_showdown:omni_ring"
+                    VoyagerFlavor.LOGGER.info("[Voyager] CONGRATS! Player ${winner} Won against dax!")
+                    val command = "give ${winner.string} mega_showdown:mega_bracelet"
+                    runCommand(thisServer!!, command)
+                    completeQuestReward(thisServer!!, winner.string, "6F161B7D8F8926BC")
+                    val command2 = "give ${winner.string} cobblemon:rare_candy 15"
+                    runCommand(thisServer!!, command2)
+                }
+            }
+            else if (loser.toString().lowercase().contains("vance")) {
+                if (thisServer != null) {
+                    VoyagerFlavor.LOGGER.info("[Voyager] CONGRATS! Player ${winner} Won against Vance!")
+                    val command = "give ${winner.string} mega_showdown:mega_bracelet"
+                    completeQuestReward(thisServer!!, winner.string, "1E3FC0308B580038")
                     runCommand(thisServer!!, command)
                 }
             }

@@ -91,10 +91,12 @@ object VoyagerEvents {
                     }
 
 
-                    if (player.tags.contains("voyager_has_license") && player.tickCount > 600 && !spawnedVance) {
+                    if (player.tags.contains("voyager_has_license") && player.tickCount > 600
+                        && !spawnedVance
+                        && !player.tags.contains("voyager_won_vance")) {
 
                         val spawnPos = findSafeSurfaceSpace(player, 150)!!
-                        spawnVanceAt(player.serverLevel(), spawnPos)
+                        spawnVanceAt(player, spawnPos)
                         sendPlayerMessage(player, "Essa pressão...", ChatFormatting.GOLD)
                         sendPlayerMessage(player, "Capitão Vance deve estar por perto!", ChatFormatting.GOLD)
                         spawnedVance = true
@@ -113,6 +115,26 @@ object VoyagerEvents {
                             player.server.tickCount.toLong()
                         )
                     )
+                }
+            }
+        }
+
+        ServerTickEvents.START_SERVER_TICK.register { server ->
+            val tickToSeconds = 20 * 15 //
+
+            if (server.tickCount % 20 == 0) {
+                for (player in server.playerList.players) {
+                    if (player.tags.contains("voyager_lyra_event")
+                        && player.tickCount / 20 >= tickToSeconds) {
+                        VoyagerFlavor.LOGGER.info("${player.name.string} has met conditions for ultra portal")
+                        val command = "ultrabeasts wormhole spawn"
+                        runCommand(server, command)
+                        player.sendSystemMessage(
+                            Component.literal("[ULTRA-SCANNER]-> ALERTA! ANOMALIA ESPACIAL DETECTADA PRÓXIMA A SUA LOCALIZAÇÃO!!!")
+                                .withStyle(ChatFormatting.RED)
+                        )
+                        player.tags.removeIf { it.contains("voyager_lyra_event") }
+                    }
                 }
             }
         }

@@ -31,7 +31,10 @@
       "lines": [
         "[ *Bip*... Ultra-Scanner sintonizado. ]"
       ],
-      "input": "q.dialogue.set_page(v.landing_page);"
+      "input": [
+        "v.landing_page = v.lic ? 'post_license' : (v.center ? 'arrival_at_center' : (v.cave ? 'ready_to_leave' : (v.met ? 'survival_tips' : 'crash_landing')));",
+        "q.dialogue.set_page(v.landing_page);"
+      ]
     },
     {
       "id": "crash_landing",
@@ -49,15 +52,24 @@
         "options": [
           {
             "text": "Onde estamos?",
-            "action": "q.dialogue.set_page('give_quest');"
+            "action": [
+              "q.run_command('voyager spawnCenter '+q.player.username);",
+              "q.dialogue.set_page('give_quest');"
+            ]
           },
           {
             "text": "Vi criaturas estranhas..",
-            "action": "q.dialogue.set_page('give_quest');"
+            "action": [
+              "q.dialogue.set_page('give_quest');",
+              "q.run_command('voyager spawnCenter '+q.player.username);"
+            ]
           },
           {
             "text": "O que aconteceu?",
-            "action": "q.dialogue.set_page('give_quest');"
+            "action": [
+              "q.dialogue.set_page('give_quest');",
+              "q.run_command('voyager spawnCenter '+q.player.username);"
+            ]
           }
         ]
       }
@@ -177,9 +189,7 @@
           {
             "text": "Meus Pokémon precisam de um descanso.",
             "action": [
-              "q.run_command('voyager gen_template bca:default/one_off/pokecenter');",
               "q.run_command('tag ' + q.player.username + ' add voyager_at_center');",
-              "q.run_command('voyager toToForest '+q.player.username);",
               "q.run_command('voyager pokecentertp ' + q.player.username);",
               "q.dialogue.close();"
             ]
@@ -191,9 +201,7 @@
           {
             "text": "Estou pronto. Keitai nos espera.",
             "action": [
-              "q.run_command('voyager gen_template bca:default/one_off/pokecenter');",
               "q.run_command('tag ' + q.player.username + ' add voyager_at_center');",
-              "q.run_command('voyager toToForest '+q.player.username);",
               "q.run_command('voyager pokecentertp ' + q.player.username);",
               "q.dialogue.close();"
             ]
@@ -217,9 +225,7 @@
           {
             "text": "Sim! Vamos nessa.",
             "action": [
-              "q.run_command('voyager gen_template bca:default/one_off/pokecenter');",
               "q.run_command('tag ' + q.player.username + ' add voyager_at_center');",
-              "q.run_command('voyager tpToForest' + q.player.username);",
               "q.run_command('voyager pokecentertp ' + q.player.username);",
               "q.dialogue.close();"
             ]
@@ -273,6 +279,7 @@
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_has_license');",
               "q.run_command('give ' + q.player.username + ' rctmod:trainer_card 1');",
+              "q.run_command('voyager spawnRival '+q.player.username);",
               "q.dialogue.close();"
             ]
           },
@@ -281,6 +288,7 @@
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_has_license');",
               "q.run_command('give ' + q.player.username + ' rctmod:trainer_card 1');",
+              "q.run_command('voyager spawnRival '+q.player.username);",
               "q.dialogue.close();"
             ]
           },
@@ -289,6 +297,7 @@
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_has_license');",
               "q.run_command('give ' + q.player.username + ' rctmod:trainer_card 1');",
+              "q.run_command('voyager spawnRival '+q.player.username);",
               "q.dialogue.close();"
             ]
           }
@@ -312,6 +321,31 @@
               "q.dialogue.close();",
               "q.run_command('voyager spawnRival ' + q.player.username);"
             ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "intro_vance",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "q.player.username + ', seu primeiro teste após conseguir sua licença é falar com o capitão Vance.'"
+        },
+        "Você ficará sob o comando dele e fará missões de reconhecimento e patrulha por anomalias. Ele é meio rigoroso então provavelmente irá querer testá-lo"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Independentemente do que ele tiver guardado, estarei pronto!",
+            "action": "q.dialogue.close();"
+          },
+          {
+            "text": "Espero que consiga lidar com ele...",
+            "action": "q.dialogue.close();"
           }
         ]
       }

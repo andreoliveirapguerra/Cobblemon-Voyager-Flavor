@@ -2,8 +2,8 @@
   "startPage": "v.landing_page",
   "initializationAction": [
     "c.npc.set_chatting();",
-    "v.won = q.player.has_tag('voyager_won_vance');",
-    "v.landing_page = v.won ? 'greeting' : 'post_battle';"
+    "v.met = q.player.has_tag('voyager_met_lyra');",
+    "v.landing_page = v.met ? 'greeting' : 'post_battle';"
   ],
   "speakers": {
     "npc": {
@@ -28,20 +28,20 @@
       "lines": [
         {
           "type": "expression",
-          "expression": "'Ah, então você é o novato ' + q.player.username + ' que recebeu a licença do Professor Redwood?'"
+          "expression": "'Muito bem cadete ' + q.player.username + ' eu reconheço seu potêncial.'"
         },
-        "A maior honra para um cadete da academia é servir como guardião, protegendo os cidadãos e treinadores das anomalias."
+        "Sua primeira missão será ir para as cordenadas indicadadas pelo ULTRA-SCANNER e recuperar o objeto que está disparando os sensores."
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Estou aqui para provar minha força e conseguir minha primeira insígnia.",
+            "text": "Entendido. Não falharei nessa missão",
             "action": "q.dialogue.set_page('challenge');"
           },
           {
-            "text": "Eu já enfrentei criaturas na caverna, dou conta do recado.",
+            "text": "Considere feito!",
             "action": "q.dialogue.set_page('challenge');"
           }
         ]
@@ -52,31 +52,27 @@
       "speaker": "npc",
       "lines": [
         "Palavras são fáceis. Aqui na fronteira, o que conta é a força do seu parceiro Pokémon e a sua estratégia no campo de batalha.",
-        "Vejamos se tem potencial pra se tornar um defensor contra as anomalias!"
+        "Se achar que precisa de mais treinamento, recomendo participar de batalhas, sua licença lhe indicara quem enfrentar para se fortalecer."
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Pode vir com tudo, Capitão!",
+            "text": "Entendido, Capitão!",
             "value": "battle",
             "action": [
               "q.dialogue.close();",
-              "q.npc.start_battle(q.player, 'single');"
+              "q.run_command('voyager triggerLyraEvent ' +q.player.username);"
             ]
           },
           {
-            "text": "Pode vir em dobro",
+            "text": "Estou indo!",
             "value": "battle",
             "action": [
               "q.dialogue.close();",
-              "q.npc.start_battle(q.player, 'double');"
+              "q.run_command('voyager triggerLyraEvent ' +q.player.username);"
             ]
-          },
-          {
-            "text": "Espere, preciso curar meus Pokémon antes.",
-            "action": "q.dialogue.close();"
           }
         ]
       }
@@ -87,22 +83,56 @@
       "lines": [
         {
           "type": "expression",
-          "expression": "'Sua força é real, ' + q.player.username + '. Você provou ser um verdadeiro guardião.'"
+          "expression": "'Bem vindo de volta cadete '+q.player.username"
         },
-        "A Insígnia que você conquistou não é apenas um troféu, é uma autorização. Agora você tem permissão para explorar além dos muros. Mantenha a guarda alta!"
+        "Muito bem, vejo que conseguiu o artefato, teve algo pelo caminho?"
       ],
       "input": {
         "type": "option",
+        "vertical": true,
         "options": [
           {
-            "text": "[Fechar]",
+            "text": "Não teve nada de extraordinário",
             "action": [
-              "q.dialogue.close();",
-              "q.run_command('give ' + q.player.username + ' voyager-flavor:pion_badge 1');"
+              "q.run_command('tag ' + q.player.username + 'add voyager_doubt_1');",
+              "q.dialogue.close();"
+            ]
+          },
+          {
+            "text": "[Contar a Verdade]",
+            "action": [
+              "q.run_command('tag ' + q.player.username + 'add voyager_foundation_1');",
+              "q.dialogue.set_page('revealed_truth');"
             ]
           }
         ]
       }
+    },
+    {
+      "id": "revealed_truth",
+      "speaker": "player",
+      "lines": [
+        "Encontrei uma tal de Lyra. Ela tinha umas ideias estranhas.",
+        "Mas não escutei e consegui pegar o artefato que ela havia roubado!"
+      ],
+      "input": "q.dialogue.set_page('congrat_vance');"
+    },
+    {
+      "id": "congrat_vance",
+      "speaker": "npc",
+      "lines": [
+        "O QUE? Digo... Não se preocupe, farei o relátorio do ocorrido.",
+        "Por hora volte e tente treinar batalhando contra alguns líderes de ginásio!"
+      ],
+      "input": "q.dialogue.set_page('WIP');"
+    },
+    {
+      "id": "WIP",
+      "speaker": "npc",
+      "lines": [
+        "O criador cansou depois dessa, por enquanto é só pessoal!"
+      ],
+      "input": "q.dialogue.close();"
     }
   ]
 }

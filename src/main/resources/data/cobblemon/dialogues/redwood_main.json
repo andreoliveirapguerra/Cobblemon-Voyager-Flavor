@@ -2,7 +2,7 @@
   "initializationAction": [
     "c.npc.set_chatting();",
     "v.started = q.player.has_tag('voyager_journey_started');",
-    "v.landing_page = v.started ? 'main' : 'intro';"
+    "v.landing_page = v.started ? 'intro' : 'main';"
   ],
   "speakers": {
     "npc": {

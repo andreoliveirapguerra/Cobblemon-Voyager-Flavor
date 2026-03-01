@@ -5,7 +5,7 @@
   ],
   "interaction": {
     "type": "dialogue",
-    "dialogue": "cobblemon:vance_chat"
+    "dialogue": "cobblemon:vance_main"
   },
   "battleConfiguration": {
     "canChallenge": true

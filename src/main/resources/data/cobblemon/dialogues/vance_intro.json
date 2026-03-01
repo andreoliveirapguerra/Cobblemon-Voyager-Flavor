@@ -1,0 +1,77 @@
+{
+  "startPage": "greeting",
+  "initializationAction": [
+    "c.npc.set_chatting();"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "greetings",
+      "speaker": "npc",
+      "lines": [
+        "Relaxar Cadete. A partir de agora você é um dos pilares que protegem os cidadãos de Keitai",
+        "Suas obrigações serão realizar escoltas de itens e patrulhas portanto o ULTRA-SCANNER."
+      ],
+      "input": "q.dialogue.set_page('briefing');"
+    },
+    {
+      "id": "briefing",
+      "speaker": "npc",
+      "lines": [
+        "Mas antes disso..."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Tenho um mal pressentimento...",
+            "action": "q.dialogue.set_page('explaining');"
+          },
+          {
+            "text": "Sem enrolação. VAMOS BATALHAR!",
+            "action": "q.dialogue.set_page('good_luck');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "explaining",
+      "speaker": "npc",
+      "lines": [
+        "QUERO VER DO QUE VOCÊ É CAPAZ ATRAVÉS DE UMA BATALHA"
+      ],
+      "input": [
+        "q.dialogue.close();",
+        "q.npc.start_battle(q.player, 'single');"
+      ]
+    },
+    {
+      "id": "good_luck",
+      "speaker": "npc",
+      "lines": [
+        "HÁ! GOSTEI DA ATITUDE!",
+        "Vejamos se tem habilidade para sustentar!"
+      ],
+      "input": [
+        "q.dialogue.close();",
+        "q.npc.start_battle(q.player, 'single');"
+      ]
+    }
+  ]
+}

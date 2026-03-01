@@ -96,7 +96,8 @@
             "text": "Começar Aventura",
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_journey_started');",
-              "q.run_command('voyager startGame ' + q.player.username);"
+              "q.run_command('voyager startGame ' + q.player.username);",
+              "q.dialogue.close();"
             ]
           }
         ]

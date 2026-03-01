@@ -1,0 +1,65 @@
+{
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.started = q.player.has_tag('voyager_met_lyra');",
+    "v.landing_page = v.started ? 'main' : 'intro';"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "greeting",
+      "speaker": "npc",
+      "lines": [
+        "[ Lendo dados do jogador... ]"
+      ],
+      "input": "q.dialogue.set_page(v.landing_page);"
+    },
+    {
+      "id": "intro",
+      "speaker": "player",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Cadete ' + q.player.username + ' se apresentando para a patrulha '"
+        }
+      ],
+      "input": [
+        "v.callback_dialogue = 'vance_intro';",
+        "c.npc.run_action_effect('change_dialogue_callback');",
+        "q.run_script('run_callback_dialogue');",
+        "q.dialogue.close();"
+      ]
+    },
+    {
+      "id": "main",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Bem-vindo de volta, Cadete ' + q.player.username + '!'"
+        }
+      ],
+      "input": [
+        "v.callback_dialogue = 'vance_chat';",
+        "c.npc.run_action_effect('change_dialogue_callback');",
+        "q.run_script('run_callback_dialogue');",
+        "q.dialogue.close();"
+      ]
+    }
+  ]
+}
