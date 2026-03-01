@@ -4,6 +4,8 @@ import com.cobblemon.mod.common.CobblemonEntities
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.entity.SpawnEvent
 import com.voyager.edition.VoyagerFlavor
+import com.voyager.edition.book.LorebookRegistry
+import com.voyager.edition.story.StoryPhaseManager
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies
 import com.cobblemon.mod.common.api.storage.party.PartyStore
@@ -61,6 +63,23 @@ object VoyagerRivalEvents {
                     val command = "give ${winner.string} mega_showdown:mega_bracelet"
                     completeQuestReward(thisServer!!, winner.string, "1E3FC0308B580038")
                     runCommand(thisServer!!, command)
+                    val player = thisServer!!.playerList.getPlayerByName(winner.string)
+                    if (player != null) {
+                        StoryPhaseManager.startPhase3_TheVoidCalls(player)
+                        player.addTag("voyager_won_vance")
+                    }
+                }
+            }
+            else if (loser.toString().lowercase().contains("lyra")) {
+                if (thisServer != null) {
+                    VoyagerFlavor.LOGGER.info("[Voyager] CONGRATS! Player ${winner} defeated Lyra!")
+                    val player = thisServer!!.playerList.getPlayerByName(winner.string)
+                    if (player != null) {
+                        val book = LorebookRegistry.LYRA_BOOK.copy()
+                        if (!player.inventory.add(book)) {
+                            player.drop(book, false)
+                        }
+                    }
                 }
             }
         }
