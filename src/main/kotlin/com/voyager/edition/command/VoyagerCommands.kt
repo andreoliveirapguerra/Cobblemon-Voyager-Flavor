@@ -2,8 +2,10 @@ package com.voyager.edition.command
 
 import com.cobblemon.mod.common.util.party
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
+import com.voyager.edition.story.UltraEventManager
 import com.voyager.edition.VoyagerFlavor
 import com.voyager.edition.event.VoyagerRivalEvents.getLevelDifferenceFromSnapshot
 import com.voyager.edition.utils.VoyagerUtils
@@ -226,6 +228,26 @@ object VoyagerCommands {
                             }
                         )
                     )
+        )
+
+        dispatcher.register(
+            Commands.literal("voyager")
+                .requires { it.hasPermission(2) }
+                .then(
+                    Commands.literal("triggerUltraEvent")
+                        .then(
+                            Commands.argument("eventId", IntegerArgumentType.integer(1))
+                                .then(
+                                    Commands.argument("target", EntityArgument.player())
+                                        .executes { context ->
+                                            val eventId = IntegerArgumentType.getInteger(context, "eventId")
+                                            val target = EntityArgument.getPlayer(context, "target")
+                                            UltraEventManager.triggerUltraEvent(target, eventId)
+                                            1
+                                        }
+                                )
+                        )
+                )
         )
 
         }
