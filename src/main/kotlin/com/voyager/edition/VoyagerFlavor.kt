@@ -3,6 +3,7 @@ package com.voyager.edition
 import com.voyager.edition.command.VoyagerCommands
 import com.voyager.edition.event.VoyagerEvents
 import com.voyager.edition.event.VoyagerRivalEvents
+import com.voyager.edition.networking.VoyagerNetworking
 import com.voyager.edition.registry.VoyagerGroup
 import com.voyager.edition.registry.VoyagerItems
 import com.voyager.edition.registry.VoyagerTrainersDatabank
@@ -28,6 +29,7 @@ object VoyagerFlavor : ModInitializer {
 		VoyagerEvents.register()
 		VoyagerRivalEvents.register()
 		VoyagerTrainersDatabank = VoyagerTrainersDatabank()
+		VoyagerNetworking.register()
 		CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
 			VoyagerCommands.register(dispatcher)
 		}

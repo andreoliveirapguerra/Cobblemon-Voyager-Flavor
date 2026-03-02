@@ -28,5 +28,8 @@
   "npc.vance.name": "Captain Vance",
   "npc.lyra.name": "Arquiteta do Team Hypnos Lyra",
   "npc.harpy.name": "Harpy",
-  "npc.elias.name": "Elias, o Sucateiro"
+  "npc.elias.name": "Elias, o Sucateiro",
+
+  "voyager.ui.dynamax": "Dynamax",
+  "voyager.ui.undynamax": "Reverter Dynamax"
 }
