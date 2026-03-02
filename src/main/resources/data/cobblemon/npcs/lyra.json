@@ -10,7 +10,7 @@
   "battleConfiguration": {
     "canChallenge": true
   },
-  "canDespawn": false,
+  "canDespawn": true,
   "autoHealParty": false,
   "skill": 10,
   "party": {

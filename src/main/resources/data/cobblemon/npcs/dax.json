@@ -7,11 +7,12 @@
     "type": "dialogue",
     "dialogue": "cobblemon:dax_initial_chat"
   },
-  "canDespawn": false,
+  "canDespawn": true,
   "battleConfiguration": {
     "canChallenge": true
   },
-  "skill": 5,
+  "autoHealParty": true,
+  "skill": 10,
   "party": {
     "type": "simple",
     "pokemon": [

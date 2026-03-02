@@ -1,0 +1,23 @@
+{
+  "hitbox": "player",
+  "names": [
+    "npc.hypnosgrunt.name"
+  ],
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:hypnosgrunt_chat"
+  },
+  "canDespawn": true,
+  "battleConfiguration": {
+    "canChallenge": true
+  },
+  "autoHealParty": true,
+  "skill": 9,
+  "party": {
+    "type": "simple",
+    "pokemon": [
+      "murkrow level=15 pokeball=ultra_ball ability=super_luck nature=hasty moves=peck,astonish,pursuit,haze hp_iv=22 attack_iv=22 defence_iv=22 special_attack_iv=22 special_defence_iv=22 speed_iv=22 attack_ev=85 speed_ev=85",
+      "drowzee level=16 pokeball=ultra_ball ability=insomnia nature=modest moves=pound,hypnosis,disable,confusion hp_iv=22 attack_iv=22 defence_iv=22 special_attack_iv=22 special_defence_iv=22 speed_iv=22 special_attack_ev=85 speed_ev=85"
+    ]
+  }
+}

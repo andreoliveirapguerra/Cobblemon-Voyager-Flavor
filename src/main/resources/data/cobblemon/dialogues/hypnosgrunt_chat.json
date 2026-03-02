@@ -1,0 +1,100 @@
+{
+  "startPage": "hub",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.met = q.player.has_tag('voyager_met_hypnosgrunt');",
+    "v.landing_page = v.met ? 'reencounter' : 'confrontation'"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "hub",
+      "speaker": "npc",
+      "lines": ["..."],
+      "input": "q.dialogue.set_page(v.landing_page);"
+    },
+    {
+      "id": "confrontation",
+      "speaker": "npc",
+      "lines": [
+        "Pare aí, cadete! Você está em território do Team Hypnos.",
+        "O Time Hypnos vai abrir as fendas que a Fundação tanto tenta esconder. E você não vai nos atrapalhar!"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Eu não deixarei vocês fazerem isso!",
+            "action": "q.dialogue.set_page('battle_start');"
+          },
+          {
+            "text": "O que vocês querem com as fendas?",
+            "action": "q.dialogue.set_page('hypnos_motives');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hypnos_motives",
+      "speaker": "npc",
+      "lines": [
+        "O que queremos? Queremos o que a Fundação roubou de todos nós! O poder do Ultra-Vazio!",
+        "Chega de conversa. Prove que você é digno de nos enfrentar!"
+      ],
+      "input": "q.dialogue.set_page('battle_start');"
+    },
+    {
+      "id": "battle_start",
+      "speaker": "npc",
+      "lines": [
+        "Vá, meus Pokémon! Mostre a esse cadete o poder do Team Hypnos!"
+      ],
+      "input": [
+        "q.npc.start_battle(q.player, 'single');",
+        "q.run_command('tag ' + q.player.username + ' add voyager_met_hypnosgrunt');",
+        "q.dialogue.close();"
+      ]
+    },
+    {
+      "id": "reencounter",
+      "speaker": "npc",
+      "lines": [
+        "Você de novo... O Team Hypnos não vai parar por causa de um único cadete.",
+        "Quer tentar de novo?"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Sim, vamos batalhar!",
+            "action": [
+              "q.npc.start_battle(q.player, 'single');",
+              "q.dialogue.close();"
+            ]
+          },
+          {
+            "text": "Não agora.",
+            "action": "q.dialogue.close();"
+          }
+        ]
+      }
+    }
+  ]
+}

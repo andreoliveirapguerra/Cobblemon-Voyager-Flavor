@@ -1,0 +1,13 @@
+{
+  "name": "cobblemon:elias",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:standard",
+      "model": "cobblemon:default.geo",
+      "texture": "cobblemon:textures/npcs/elias/elias.png",
+      "layers": []
+    }
+  ]
+}

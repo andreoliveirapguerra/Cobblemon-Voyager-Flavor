@@ -1,0 +1,173 @@
+{
+  "startPage": "hub",
+  "initializationAction": [
+    "c.npc.set_chatting();",
+    "v.met = q.player.has_tag('voyager_met_elias');",
+    "v.landing_page = v.met ? 'reencounter' : 'first_meeting'"
+  ],
+  "speakers": {
+    "npc": {
+      "name": {
+        "type": "expression",
+        "expression": "q.npc.name"
+      },
+      "face": "q.npc.face();"
+    },
+    "player": {
+      "face": "q.player.face();",
+      "name": {
+        "type": "expression",
+        "expression": "q.player.username"
+      }
+    }
+  },
+  "pages": [
+    {
+      "id": "hub",
+      "speaker": "npc",
+      "lines": ["..."],
+      "input": "q.dialogue.set_page(v.landing_page);"
+    },
+    {
+      "id": "first_meeting",
+      "speaker": "npc",
+      "lines": [
+        {
+          "type": "expression",
+          "expression": "'Então... você desceu. Usou o Link da Harpy, né? Eu senti a distorção quando você atravessou a parede.'"
+        },
+        "Sou Elias. Antes eu consertava os geradores que mantêm essas ilhas no ar. Agora eu vivo do que sobra delas.",
+        "Você não veio aqui pra bater papo. Veio atrás de respostas que a Academia não dá."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "O que é esse lugar de verdade?",
+            "action": "q.dialogue.set_page('sector_explain');"
+          },
+          {
+            "text": "Como você sabe da Harpy?",
+            "action": "q.dialogue.set_page('harpy_question');"
+          },
+          {
+            "text": "Preciso de ajuda com radiação. Tem algo que sirva?",
+            "action": "q.dialogue.set_page('anti_rad_suit');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sector_explain",
+      "speaker": "npc",
+      "lines": [
+        "Isso aqui é o Setor Zero. Onde a Fundação joga tudo que não consegue explicar ou consertar.",
+        "Sucata radioativa, protótipos falhos, corpos de Pokémon que não aguentaram os testes... e fendas que ninguém admite que existem.",
+        "Aqui embaixo a Redstone não manda. É o único lugar onde o universo ainda consegue respirar."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "A Fundação sabe disso tudo?",
+            "action": "q.dialogue.set_page('foundation_truth');"
+          },
+          {
+            "text": "Me ajuda a sobreviver aqui embaixo?",
+            "action": "q.dialogue.set_page('anti_rad_suit');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "foundation_truth",
+      "speaker": "npc",
+      "lines": [
+        "Eles sabem. Só fingem que não. O Setor Zero é o preço do progresso deles.",
+        "Eles chamam de 'lixo inevitável'. Eu chamo de verdade."
+      ],
+      "input": "q.dialogue.set_page('anti_rad_suit');"
+    },
+    {
+      "id": "harpy_question",
+      "speaker": "npc",
+      "lines": [
+        "Harpy? Ela não trabalha pra ninguém. Nem pra Fundação, nem pro Hypnos.",
+        "Ela só... observa. E às vezes ajuda quem está no meio do fogo cruzado.",
+        "Você está no meio agora. Cuidado."
+      ],
+      "input": "q.dialogue.set_page('anti_rad_suit');"
+    },
+    {
+      "id": "anti_rad_suit",
+      "speaker": "npc",
+      "lines": [
+        "Aqui embaixo a radiação come HP dos seus Pokémon fora de batalha. Sem proteção você não dura 10 minutos.",
+        "Eu tenho algo que sobrou de um protótipo antigo. Não é bonito, mas funciona."
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "[Receber Traje de Proteção]",
+            "action": [
+              "q.run_command('give ' + q.player.username + ' voyager_flavor:anti_radiation_suit 1');",
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_elias');",
+              "q.dialogue.set_page('farewell');"
+            ]
+          },
+          {
+            "text": "Obrigado. Talvez eu volte depois.",
+            "action": [
+              "q.run_command('tag ' + q.player.username + ' add voyager_met_elias');",
+              "q.dialogue.set_page('farewell');"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "farewell",
+      "speaker": "npc",
+      "lines": [
+        "Use com cuidado. E não confie em ninguém aqui embaixo... nem em mim.",
+        "Volte quando quiser. Ou quando precisar."
+      ],
+      "input": "q.dialogue.close();"
+    },
+    {
+      "id": "reencounter",
+      "speaker": "npc",
+      "lines": [
+        "Você voltou. O Setor Zero ainda não te matou... bom sinal.",
+        "Precisa de algo? Ou só veio ver se eu ainda tô vivo?"
+      ],
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": "Preciso de mais proteção / upgrades.",
+            "action": "q.dialogue.set_page('reencounter_help');"
+          },
+          {
+            "text": "Só vim conversar.",
+            "action": "q.dialogue.set_page('farewell');"
+          }
+        ]
+      }
+    },
+    {
+      "id": "reencounter_help",
+      "speaker": "npc",
+      "lines": [
+        "Tenho algumas peças sobrando. Posso melhorar o traje ou consertar algo que você trouxe.",
+        "Mas vai custar sucata ou tempo. O que você tem aí?"
+      ],
+      "input": "q.dialogue.close();"
+    }
+  ]
+}

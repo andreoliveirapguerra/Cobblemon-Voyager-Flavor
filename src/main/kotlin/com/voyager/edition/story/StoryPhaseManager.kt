@@ -22,6 +22,7 @@ object StoryPhaseManager {
     // ─── Phase 3: The Void Calls ──────────────────────────────────────────────
 
     fun startPhase3_TheVoidCalls(player: ServerPlayer) {
+        player.addTag("voyager_phase3_started")
         spawnHarpyNearPlayer(player)
         giveBookToPlayer(player, LorebookRegistry.VANCE_BOOK.copy())
         player.sendSystemMessage(

@@ -20,5 +20,8 @@
   "npc.joy.name": "Nurse Joy",
   "npc.ellie.name": "Nurse Ellie",
   "npc.vance.name": "Captain Vance",
-  "npc.lyra.name": "Arquiteta do Team Hypnos Lyra"
+  "npc.lyra.name": "Arquiteta do Team Hypnos Lyra",
+  "npc.harpy.name": "Pesquisadora Independente Harpy",
+  "npc.elias.name": "Sucateiro Elias",
+  "npc.hypnosgrunt.name": "Agente do Team Hypnos"
 }

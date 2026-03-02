@@ -45,6 +45,7 @@ object VoyagerEvents {
                     if (!player.tags.contains("voyager_journey_started") && !spawnedRedwood) {
                         spawnProfessor(player.serverLevel(), player.blockPosition())
                         spawnedRedwood = true
+                        player.tags.add("voyager_journey_started")
                     }
                     // Check if they are in the Tutorial Phase
                     if (player.tags.contains("voyager.first_join")) {

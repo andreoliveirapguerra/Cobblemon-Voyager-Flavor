@@ -1,0 +1,14 @@
+{
+  "hitbox": "player",
+  "names": [
+    "npc.harpy.name"
+  ],
+  "interaction": {
+    "type": "dialogue",
+    "dialogue": "cobblemon:harpy_first_contact"
+  },
+  "battleConfiguration": {
+    "canChallenge": true
+  },
+  "canDespawn": true
+}

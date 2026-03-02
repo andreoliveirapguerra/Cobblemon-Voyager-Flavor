@@ -11,7 +11,11 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import org.slf4j.LoggerFactory
 
 object VoyagerFlavor : ModInitializer {
-	val LOGGER = LoggerFactory.getLogger("voyager-flavor")
+	// TODO: Make textures.npc/harpy/harpy different from lyra yet somehow similar to indicate parenthood
+	// TODO: Create the necessary files for Elias and Grunt (Researcher Skin)
+
+	// TODO: Once elias and grunt are set up, merge and build Claude Branch Changes
+	val LOGGER = LoggerFactory.getLogger("voyager-flavor")!!
 
 	const val MOD_ID = "voyager-flavor"
 
@@ -21,7 +25,7 @@ object VoyagerFlavor : ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-		LOGGER.info("Hello Fabric world!")
+		LOGGER.info("[Voyager] Initializing VoyagerMod")
 
 		VoyagerItems.registerModItems()
 		VoyagerGroup.registerGroup()

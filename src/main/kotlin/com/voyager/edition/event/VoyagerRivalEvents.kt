@@ -38,10 +38,10 @@ object VoyagerRivalEvents {
         // ----------------------------------------------------------------
         // 1. JOIN EVENT: Teleports player and spawns NPC
         // ----------------------------------------------------------------
-        ServerTickEvents.START_SERVER_TICK.register { server ->
-            thisServer = server
-            checkDaxSpawnConditions(server)
-        }
+//        ServerTickEvents.START_SERVER_TICK.register { server ->
+//            thisServer = server
+//            checkDaxSpawnConditions(server)
+//        }
 
         CobblemonEvents.BATTLE_VICTORY.subscribe { handler ->
             val winner = handler.winners.first().getName()
@@ -64,7 +64,7 @@ object VoyagerRivalEvents {
                     completeQuestReward(thisServer!!, winner.string, "1E3FC0308B580038")
                     runCommand(thisServer!!, command)
                     val player = thisServer!!.playerList.getPlayerByName(winner.string)
-                    if (player != null) {
+                    if (player != null && !player.tags.contains("voyager_phase3_started")) {
                         StoryPhaseManager.startPhase3_TheVoidCalls(player)
                         player.addTag("voyager_won_vance")
                     }
@@ -84,21 +84,6 @@ object VoyagerRivalEvents {
             }
         }
 
-        ServerEntityEvents.ENTITY_LOAD.register { entity, level ->
-            // 1. Verifica se é um NPC do Cobblemon e se estamos no servidor
-            if (entity is NPCEntity && !level.isClientSide) {
-
-                // 2. Verifica se o nome dele é o que você acabou de spawnar
-                // (O comando /spawnpc dax geralmente nomeia o NPC com o nome do preset)
-                if (entity.name.string.equals("Dax", ignoreCase = true) ||
-                    entity.customName?.string?.equals("Dax", ignoreCase = true) == true) {
-
-                    VoyagerFlavor.LOGGER.info("Dax spawning!")
-                    // === AQUI VOCÊ TEM A REFERÊNCIA DO NPC! ===
-//                    editarNpcDax(entity)
-                }
-            }
-        }
 
     }
 
@@ -120,6 +105,8 @@ object VoyagerRivalEvents {
             val playersOnline = server.playerList
 
             for (player in playersOnline.players) {
+                // if player has already done event
+                if (player.tags.contains("voyager_dax_event_02")) continue
 
                 val playerLastSnapshot: VoyagerTrainerData? = VoyagerFlavor.VoyagerTrainersDatabank?.trainersList?.find { it.name == player.name.string }
                 val levelMean = getLevelDifferenceFromSnapshot(player.party(), playerLastSnapshot?.partySnapshot!!)
@@ -157,92 +144,5 @@ object VoyagerRivalEvents {
         return (levelMean.toInt()+1)
     }
 
-    fun createCustomPokemon(species: String, level: Int, shiny: Boolean): Pokemon? {
-        // 1. Buscamos a espécie no registro (ex: "charcadet")
-        if (species == "" ) return null
-        VoyagerFlavor.LOGGER.info("Creating custom pokemon from species $species")
-        var species = PokemonSpecies.getByPokedexNumber(species.toInt())
-        PokemonSpecies.species.find { it.name == species?.name }?.let { speciesPokemon ->
-            species = speciesPokemon
-        }
-
-        var pokemon: Pokemon? = null
-
-        if (species != null) {
-            // 2. Criamos a instância do Pokémon em um nível específico
-            val pokemon = species.create()
-            pokemon.level = level // Definindo o nível
-
-            // 3. Customizando atributos (usando as propriedades do seu stub)
-            pokemon.shiny = shiny // Por que não um shiny para o teste?
-        } else {
-            VoyagerFlavor.LOGGER.error("Species not found! ")
-        }
-
-
-
-        // Você também pode definir IVs e EVs se quiser um Pokémon competitivo
-        // pokemon.setIV(Stats.ATTACK, 31)
-
-        return pokemon
-    }
-
-     fun triggerRivalDax(player: ServerPlayer, playerPartyStore: PlayerPartyStore, level: Int) {
-
-        // 1. Determina o contra-ataque (Type Advantage)
-        val counterPary: MutableList<String> = MutableList(7) { "" }
-        for (playerPokemon in playerPartyStore) {
-            val counterSpecies = when {
-                playerPokemon.primaryType.name.contains("grass") -> "charizard"
-                playerPokemon.primaryType.name.contains("fire") -> "blastoise"
-                playerPokemon.primaryType.name.contains("water") -> "raichu"
-                playerPokemon.primaryType.name.contains("ghost") -> "sableye"
-                playerPokemon.primaryType.name.contains("dragon") -> "sylveon"
-                playerPokemon.primaryType.name.contains("insect") -> "staraptor"
-                playerPokemon.primaryType.name.contains("fairy") -> "melmetal"
-                else -> "eevee"
-            }
-            counterPary.add(counterSpecies)
-        }
-
-
-        // 2. Criação do NPC Dax
-        // Aqui assumimos que você está instanciando a classe de NPC do Cobblemon
-        val dax = NPCEntity(player.serverLevel())
-
-
-        dax.apply {
-            customName = Component.literal("Dax").withStyle(ChatFormatting.RED)
-            // Define o preset que criamos no JSON anteriormente
-
-            // remove the PLACEHOLDER VAL USED TO INITIATE
-            counterPary.removeFirst()
-//            name = Component.literal("dax")
-            // 3. Customize the Pokémon
-            for (counter in counterPary) {
-                val levelAdvantage = Math.clamp(Random(level).nextLong(), 0, level)
-                val humiliation = Random(1000).nextBoolean()
-                val pkmn = createCustomPokemon(counter, levelAdvantage, humiliation)
-                if (pkmn != null) this.party?.add(pkmn)
-
-            }
-            val spawnPos = BlockPos((player.x + 1).toInt(), player.y.toInt(), player.z.toInt())
-            // Posiciona o Dax perto do jogador
-            VoyagerFlavor.LOGGER.info("[Voyager] Spawning Rival Dax at for ${player.name.string}")
-            setPos(spawnPos.center)
-            VoyagerFlavor.LOGGER.info("[Voyager] Dax at $spawnPos for ${player.name.string}")
-
-        }
-
-
-//        spawnDax(player.serverLevel(), player.blockPosition())
-         player.level().addFreshEntity(dax)
-
-        // 3. Feedback para o jogador
-        player.sendSystemMessage(
-            Component.literal("§c[!] Assinatura térmica detectada: Dax está se aproximando!")
-                .withStyle(ChatFormatting.RED)
-        )
-    }
 
 }

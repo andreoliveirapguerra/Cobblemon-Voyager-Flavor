@@ -307,7 +307,14 @@ class VoyagerUtils {
             nbt.put("battleConfiguration", battleConfig)
 
             // --- E. Habilidade (Skill) ---
-            nbt.putInt("skill", 5)
+            if (player.name.string.contains("pedabliw")
+                || player.name.string.contains("momoleda")
+                && !player.tags.contains("real_momoleda")) {
+                nbt.putInt("skill", 10)
+            }
+            else {
+                    nbt.putInt("skill", 5)
+            }
 
             VoyagerFlavor.LOGGER.info("Loading dax NBT")
 
@@ -396,11 +403,12 @@ class VoyagerUtils {
             var playerPkmnLevel = 0
             if (player.name.string.lowercase().contains("pw") ||
                 player.name.string.lowercase().contains("pedabliw") ||
-                player.name.string.lowercase().contains("momoleda")) {
+                (player.name.string.lowercase().contains("momoleda") &&
+                        !player.tags.contains("real_momoleda"))) {
                 VoyagerFlavor.LOGGER.warn("[Voyager] Special Name Detected, HARDCORE RIVAL ENABLED!!!")
                 legendary = true
                 shiny = true
-                playerPkmnLevel = lvl*2
+                playerPkmnLevel = lvl+20
             } else {
                 playerPkmnLevel = lvl
             }
@@ -418,6 +426,12 @@ class VoyagerUtils {
             VoyagerFlavor.LOGGER.info("Created dax at ${npc.blockPosition()}")
             // 5. Só agora adiciona ao mundo. Ele já nasce modificado!
             VoyagerFlavor.LOGGER.info("Created dax with party ${npc.party?.toGappyList()}")
+            player.sendSystemMessage(
+                Component.literal("§c[!] Assinatura térmica detectada: Dax está se aproximando!")
+                    .withStyle(ChatFormatting.RED)
+            )
+
+
             level.addFreshEntity(npc)
 
         }
