@@ -17,6 +17,8 @@ object VoyagerItems {
     val ANTARES_BADGE = registerBadge("antares_badge", "item.voyager.antares.desc")
     val ANDROMEDA_BADGE = registerBadge("andromeda_badge", "item.voyager.andromeda.desc")
     val ARTIFACT = registerArtifact("artifact", "item.voyager.artifact.desc")
+    val LINK_TUNELAMENTO = registerArtifact("link_tunelamento", "item.voyager.link_tunelamento.desc")
+    val ANTI_RADIATION_SUIT = registerArtifact("anti_radiation_suit", "item.voyager.anti_radiation_suit.desc")
 
     private fun registerBadge(name: String, tooltipKey: String): Item {
         val properties = Item.Properties().rarity(Rarity.RARE)

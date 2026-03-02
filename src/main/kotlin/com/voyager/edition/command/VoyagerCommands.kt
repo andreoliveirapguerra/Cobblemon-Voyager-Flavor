@@ -5,7 +5,10 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
+import com.voyager.edition.story.StoryPhaseManager
 import com.voyager.edition.story.UltraEventManager
+import com.voyager.edition.registry.VoyagerItems
+import net.minecraft.world.item.ItemStack
 import com.voyager.edition.VoyagerFlavor
 import com.voyager.edition.event.VoyagerRivalEvents.getLevelDifferenceFromSnapshot
 import com.voyager.edition.utils.VoyagerUtils
@@ -243,6 +246,59 @@ object VoyagerCommands {
                                             val eventId = IntegerArgumentType.getInteger(context, "eventId")
                                             val target = EntityArgument.getPlayer(context, "target")
                                             UltraEventManager.triggerUltraEvent(target, eventId)
+                                            1
+                                        }
+                                )
+                        )
+                )
+        )
+
+        dispatcher.register(
+            Commands.literal("voyager")
+                .requires { it.hasPermission(2) }
+                .then(
+                    Commands.literal("giveLinkTunelamento")
+                        .then(
+                            Commands.argument("target", EntityArgument.player())
+                                .executes { context ->
+                                    val target = EntityArgument.getPlayer(context, "target")
+                                    val item = ItemStack(VoyagerItems.LINK_TUNELAMENTO)
+                                    if (!target.inventory.add(item)) target.drop(item, false)
+                                    1
+                                }
+                        )
+                )
+        )
+
+        dispatcher.register(
+            Commands.literal("voyager")
+                .requires { it.hasPermission(2) }
+                .then(
+                    Commands.literal("spawnElias")
+                        .then(
+                            Commands.argument("target", EntityArgument.player())
+                                .executes { context ->
+                                    val target = EntityArgument.getPlayer(context, "target")
+                                    StoryPhaseManager.startEvent12_EliasMeeting(target)
+                                    1
+                                }
+                        )
+                )
+        )
+
+        dispatcher.register(
+            Commands.literal("voyager")
+                .requires { it.hasPermission(2) }
+                .then(
+                    Commands.literal("moralChoice")
+                        .then(
+                            Commands.argument("choice", StringArgumentType.word())
+                                .then(
+                                    Commands.argument("target", EntityArgument.player())
+                                        .executes { context ->
+                                            val choice = StringArgumentType.getString(context, "choice")
+                                            val target = EntityArgument.getPlayer(context, "target")
+                                            applyMoralChoice(target, choice)
                                             1
                                         }
                                 )
@@ -618,5 +674,29 @@ object VoyagerCommands {
             }
         }
         return null // Não encontrou nada no raio
+    }
+
+    private fun applyMoralChoice(player: ServerPlayer, choice: String) {
+        when (choice.lowercase()) {
+            "order" -> {
+                player.addTag("voyager_moral_order")
+                player.sendSystemMessage(
+                    Component.literal("Você escolheu selar a fenda com a Fundação Voyager. A Ordem prevalece.")
+                        .withStyle(ChatFormatting.DARK_BLUE)
+                )
+                runCommand(player.server, "give ${player.name.string} cobblemon:rare_candy 5")
+                VoyagerFlavor.LOGGER.info("[Voyager] ${player.name.string} chose ORDER")
+            }
+            "chaos" -> {
+                player.addTag("voyager_moral_chaos")
+                player.sendSystemMessage(
+                    Component.literal("Você escolheu estabilizar a fenda com o Hypnos. O Caos guia o caminho.")
+                        .withStyle(ChatFormatting.DARK_PURPLE)
+                )
+                runCommand(player.server, "give ${player.name.string} cobblemon:rare_candy 5")
+                VoyagerFlavor.LOGGER.info("[Voyager] ${player.name.string} chose CHAOS")
+            }
+            else -> VoyagerFlavor.LOGGER.warn("[Voyager] Unknown moral choice '$choice' for ${player.name.string}")
+        }
     }
 }

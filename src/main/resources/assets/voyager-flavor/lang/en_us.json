@@ -15,13 +15,22 @@
 
   "item.voyager.artifact.desc": "An strange and unknown artifact. Seems harmless...",
 
+  "item.voyager-flavor.link_tunelamento": "Link de Tunelamento",
+  "item.voyager.link_tunelamento.desc": "Um dispositivo que permite atravessar fendas estáveis. Dado pela Harpy.",
+
+  "item.voyager-flavor.anti_radiation_suit": "Traje de Proteção",
+  "item.voyager.anti_radiation_suit.desc": "Protege contra a radiação do Setor Zero. Fabricado por Elias.",
+
   "npc.redwood.name": "Professor Redwood",
   "npc.dax.name": "Rival Dax",
   "npc.joy.name": "Nurse Joy",
   "npc.ellie.name": "Nurse Ellie",
   "npc.vance.name": "Captain Vance",
-  "npc.lyra.name": "Arquiteta do Team Hypnos Lyra",
   "npc.harpy.name": "Pesquisadora Independente Harpy",
-  "npc.elias.name": "Sucateiro Elias",
-  "npc.hypnosgrunt.name": "Agente do Team Hypnos"
+  "npc.hypnosgrunt.name": "Agente do Team Hypnos",
+  "npc.lyra.name": "Arquiteta do Team Hypnos Lyra",
+  "npc.elias.name": "Elias, o Sucateiro",
+
+  "voyager.ui.dynamax": "Dynamax",
+  "voyager.ui.undynamax": "Reverter Dynamax"
 }

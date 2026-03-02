@@ -5,10 +5,12 @@
   ],
   "interaction": {
     "type": "dialogue",
-    "dialogue": "cobblemon:harpy_first_contact"
+    "dialogue": "cobblemon:harpy_main"
   },
   "battleConfiguration": {
-    "canChallenge": true
+    "canChallenge": false
   },
-  "canDespawn": true
+  "canDespawn": false,
+  "autoHealParty": false,
+  "skill": 0
 }

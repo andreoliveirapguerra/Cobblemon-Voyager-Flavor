@@ -12,39 +12,56 @@ import net.minecraft.world.item.ItemStack
 /**
  * Central manager for Keitai's narrative progression.
  *
- * Phases:
- *  Phase 3 — The Void Calls       (after player beats Vance + meets Lyra)
- *  Phase 4 — Sector Zero          (stub: Harpy dialogue arc, biome unlock)
- *  Phase 5 — Fenda Final          (stub: moral choice — Voyager vs Hypnos)
+ *  Event 11 — Harpy First Contact    (spawn Harpy + wormhole + Link de Tunelamento)
+ *  Event 12 — Elias Meeting          (spawn Elias no Setor Zero)
+ *  Event 13 — Fenda do Equilíbrio    (moral choice: Ordem vs Caos)
  */
 object StoryPhaseManager {
 
-    // ─── Phase 3: The Void Calls ──────────────────────────────────────────────
+    // ─── Event 11: Harpy First Contact ────────────────────────────────────────
+
+    fun startEvent11_HarpyFirstContact(player: ServerPlayer) {
+        spawnHarpyNearPlayer(player)
+        UltraEventManager.triggerUltraEvent(player, 1)
+        giveItemToPlayer(player, ItemStack(VoyagerItems.LINK_TUNELAMENTO))
+        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Event 11 started for ${player.name.string}")
+    }
+
+    // ─── Event 12: Elias Meeting ──────────────────────────────────────────────
+
+    fun startEvent12_EliasMeeting(player: ServerPlayer) {
+        spawnEliasNearPlayer(player)
+        player.sendSystemMessage(
+            Component.literal("[ULTRA-SCANNER] Assinatura de calor detectada no Setor Zero. Investigar.")
+                .withStyle(ChatFormatting.DARK_GRAY)
+        )
+        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Event 12 started for ${player.name.string}")
+    }
+
+    // ─── Event 13: Fenda do Equilíbrio ────────────────────────────────────────
+
+    fun startEvent13_MoralChoice(player: ServerPlayer) {
+        UltraEventManager.triggerUltraEvent(player, 13)
+        spawnHarpyNearPlayer(player)
+        player.sendSystemMessage(
+            Component.literal("[ULTRA-SCANNER] ANOMALIA MÁXIMA DETECTADA. A Fenda do Equilíbrio se abriu.")
+                .withStyle(ChatFormatting.DARK_RED)
+        )
+        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Event 13 started for ${player.name.string}")
+    }
+
+    // ─── Phase 3 alias (called by VoyagerRivalEvents on Vance victory) ────────
 
     fun startPhase3_TheVoidCalls(player: ServerPlayer) {
         player.addTag("voyager_phase3_started")
         spawnHarpyNearPlayer(player)
-        giveBookToPlayer(player, LorebookRegistry.VANCE_BOOK.copy())
+        giveItemToPlayer(player, LorebookRegistry.VANCE_BOOK.copy())
         player.sendSystemMessage(
             Component.literal("[ULTRA-SCANNER] Sinal anômalo detectado no Setor Zero...")
                 .withStyle(ChatFormatting.DARK_GRAY)
         )
         player.addTag("voyager_met_harpy")
-        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Phase 3 started for ${player.name.string}")
-    }
-
-    // ─── Phase 4 (stub) ───────────────────────────────────────────────────────
-
-    fun startPhase4_SectorZeroExploration(player: ServerPlayer) {
-        // TODO: unlock Sector Zero biome access, begin Harpy dialogue arc
-        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Phase 4 stub called for ${player.name.string}")
-    }
-
-    // ─── Phase 5 (stub) ───────────────────────────────────────────────────────
-
-    fun startPhase5_MoralChoice_FendaFinal(player: ServerPlayer) {
-        // TODO: final moral choice — join Voyager or Hypnos
-        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Phase 5 stub called for ${player.name.string}")
+        startEvent11_HarpyFirstContact(player)
     }
 
     // ─── Private helpers ──────────────────────────────────────────────────────
@@ -59,10 +76,19 @@ object StoryPhaseManager {
         VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Harpy spawned at $safePos for ${player.name.string}")
     }
 
-    private fun giveBookToPlayer(player: ServerPlayer, book: ItemStack) {
-        if (!player.inventory.add(book)) {
-            // Inventory full — drop the book at the player's feet
-            player.drop(book, false)
+    private fun spawnEliasNearPlayer(player: ServerPlayer) {
+        val safePos = findSafeSurfaceSpace(player, 60) ?: player.blockPosition()
+        runCommand(player.server, "spawnnpcat ${safePos.x} ${safePos.y} ${safePos.z} elias")
+        player.sendSystemMessage(
+            Component.literal("Alguém está aqui embaixo... você não está sozinho.")
+                .withStyle(ChatFormatting.YELLOW)
+        )
+        VoyagerFlavor.LOGGER.info("[StoryPhaseManager] Elias spawned at $safePos for ${player.name.string}")
+    }
+
+    private fun giveItemToPlayer(player: ServerPlayer, item: ItemStack) {
+        if (!player.inventory.add(item)) {
+            player.drop(item, false)
         }
     }
 }

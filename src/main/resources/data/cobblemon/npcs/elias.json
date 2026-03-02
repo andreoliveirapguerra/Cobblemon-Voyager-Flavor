@@ -5,7 +5,7 @@
   ],
   "interaction": {
     "type": "dialogue",
-    "dialogue": "cobblemon:elias_chat"
+    "dialogue": "cobblemon:elias_main"
   },
   "canDespawn": true,
   "battleConfiguration": {
