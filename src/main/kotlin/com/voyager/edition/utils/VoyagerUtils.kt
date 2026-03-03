@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies
 import com.cobblemon.mod.common.api.storage.party.NPCPartyStore
 import com.cobblemon.mod.common.entity.npc.NPCEntity
+import com.cobblemon.mod.common.pokemon.Pokemon
 import com.voyager.edition.VoyagerFlavor
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
@@ -278,6 +279,16 @@ class VoyagerUtils {
             }
         }
 
+        fun isPokemonAlpha(pokemon: Pokemon): Boolean {
+            var isAlpha: Boolean = pokemon.persistentData.contains("alpha=yes") ||
+                    pokemon.persistentData.contains("alpha=true")
+
+            val alphaProp = pokemon.customProperties.filter { it.toString().contains("alpha") }
+
+            isAlpha = isAlpha || alphaProp.isNotEmpty()
+
+            return isAlpha
+        }
 
         fun configurarNpcDax(npc: NPCEntity, player: ServerPlayer, level: Int) {
             // 1. Prepara o NBT para as configurações estruturais

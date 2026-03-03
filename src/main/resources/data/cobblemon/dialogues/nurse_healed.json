@@ -13,7 +13,10 @@
     {
       "id": "greeting",
       "speaker": "npc",
-      "lines": ["Your Pokémon appear to be in top shape!", "See you next time!"],
+      "lines": [
+        {"translate": "dialogue.voyager.nurse_healed.greeting.line1"},
+        {"translate": "dialogue.voyager.nurse_healed.greeting.line2"}
+      ],
       "input": "q.dialogue.close();"
     }
   ]

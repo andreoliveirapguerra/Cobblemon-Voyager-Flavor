@@ -30,18 +30,18 @@
           "type": "expression",
           "expression": "'Você... está carregando dois livros. Um de ferro e outro de cinzas. Interessante.'"
         },
-        "Não se assuste. Eu vejo o que os outros escondem. Meu nome é Harpy. E você é o cadete que está mexendo no equilíbrio sem nem perceber."
+        {"translate": "dialogue.voyager.harpy_first_contact.first_contact.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Como você sabe dos livros?",
+            "text": {"translate": "dialogue.voyager.harpy_first_contact.first_contact.option1"},
             "action": "q.dialogue.set_page('harpy_knowledge');"
           },
           {
-            "text": "O que você quer de mim?",
+            "text": {"translate": "dialogue.voyager.harpy_first_contact.first_contact.option2"},
             "action": "q.dialogue.set_page('harpy_knowledge');"
           }
         ]
@@ -51,20 +51,20 @@
       "id": "harpy_knowledge",
       "speaker": "npc",
       "lines": [
-        "Eu não leio livros... eu leio as fendas que eles deixam no tecido da realidade.",
-        "A Fundação quer selar tudo. O Hypnos quer abrir tudo. E você está no meio, segurando as duas chaves.",
-        "O Setor Zero está chamando. Lá embaixo, onde o lixo da Redstone vira verdade, há respostas que nenhum dos dois lados quer que você veja."
+        {"translate": "dialogue.voyager.harpy_first_contact.harpy_knowledge.line1"},
+        {"translate": "dialogue.voyager.harpy_first_contact.harpy_knowledge.line2"},
+        {"translate": "dialogue.voyager.harpy_first_contact.harpy_knowledge.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "O que é o Setor Zero?",
+            "text": {"translate": "dialogue.voyager.harpy_first_contact.harpy_knowledge.option1"},
             "action": "q.dialogue.set_page('sector_zero');"
           },
           {
-            "text": "Por que eu deveria confiar em você?",
+            "text": {"translate": "dialogue.voyager.harpy_first_contact.harpy_knowledge.option2"},
             "action": "q.dialogue.set_page('trust');"
           }
         ]
@@ -74,15 +74,15 @@
       "id": "sector_zero",
       "speaker": "npc",
       "lines": [
-        "Onde a Fundação joga o que não explica. Sucata, falhas, corpos... e fendas que não deveriam existir.",
-        "Leve isso. Chama-se Link de Tunelamento. Ele vai te mostrar caminhos que os outros não veem.",
-        "Use com cuidado. Alguns caminhos não voltam."
+        {"translate": "dialogue.voyager.harpy_first_contact.sector_zero.line1"},
+        {"translate": "dialogue.voyager.harpy_first_contact.sector_zero.line2"},
+        {"translate": "dialogue.voyager.harpy_first_contact.sector_zero.line3"}
       ],
       "input": {
         "type": "option",
         "options": [
           {
-            "text": "[Receber Item]",
+            "text": {"translate": "dialogue.voyager.harpy_first_contact.sector_zero.option1"},
             "action": [
               "q.run_command('give @p voyager_flavor:link_tunelamento 1');",
               "q.run_command('tag @p add voyager_met_harpy');",
@@ -96,8 +96,8 @@
       "id": "trust",
       "speaker": "npc",
       "lines": [
-        "Você não precisa confiar em mim. Precisa confiar na sua própria dúvida.",
-        "Leia os livros que carregou. Depois desça. O Setor Zero não mente."
+        {"translate": "dialogue.voyager.harpy_first_contact.trust.line1"},
+        {"translate": "dialogue.voyager.harpy_first_contact.trust.line2"}
       ],
       "input": "q.dialogue.set_page('sector_zero');"
     },
@@ -105,8 +105,8 @@
       "id": "farewell",
       "speaker": "npc",
       "lines": [
-        "Quando o silêncio da Redstone começar a pesar... procure-me lá embaixo.",
-        "O equilíbrio não espera por ninguém."
+        {"translate": "dialogue.voyager.harpy_first_contact.farewell.line1"},
+        {"translate": "dialogue.voyager.harpy_first_contact.farewell.line2"}
       ],
       "input": "q.dialogue.close();"
     },
@@ -114,8 +114,8 @@
       "id": "second_meeting",
       "speaker": "npc",
       "lines": [
-        "Você voltou. Ou melhor... desceu.",
-        "O que viu lá embaixo já mudou algo em você?"
+        {"translate": "dialogue.voyager.harpy_first_contact.second_meeting.line1"},
+        {"translate": "dialogue.voyager.harpy_first_contact.second_meeting.line2"}
       ],
       "input": "q.dialogue.close();"
     }

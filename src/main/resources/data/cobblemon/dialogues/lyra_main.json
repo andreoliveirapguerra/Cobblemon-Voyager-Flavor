@@ -25,7 +25,7 @@
       "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "Você... Eu te conheço de algum lugar?"
+        {"translate": "dialogue.voyager.lyra_main.greeting.line1"}
       ],
       "input": "q.dialogue.set_page(v.landing_page);"
     },

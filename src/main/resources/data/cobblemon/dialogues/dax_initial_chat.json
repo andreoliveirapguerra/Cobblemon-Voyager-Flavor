@@ -25,13 +25,13 @@
     {
       "id": "hub",
       "speaker": "npc",
-      "lines": ["..."],
+      "lines": [{"translate": "dialogue.voyager.dax_initial_chat.hub.line1"}],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
     {
       "id": "reencounter",
       "speaker": "npc",
-      "lines": ["hmm...?"],
+      "lines": [{"translate": "dialogue.voyager.dax_initial_chat.reencounter.line1"}],
       "input": [
         "v.callback_dialogue = 'dax_reencounter';",
         "c.npc.run_action_effect('change_dialogue_callback');",
@@ -46,18 +46,18 @@
           "type": "expression",
           "expression": "'Hum, então você é o tal ' + q.player.username + '?'"
         },
-        "Não me parece grande coisa. Acho que o Prof. Redwood está perdendo o toque para reconhecer talentos se você é o melhor que a Academia tem a oferecer."
+        {"translate": "dialogue.voyager.dax_initial_chat.meeting.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Quem é você para falar assim?",
+            "text": {"translate": "dialogue.voyager.dax_initial_chat.meeting.option1"},
             "action": "q.dialogue.set_page('dax_identity');"
           },
           {
-            "text": "O Professor confia em mim. Isso é o que importa.",
+            "text": {"translate": "dialogue.voyager.dax_initial_chat.meeting.option2"},
             "action": "q.dialogue.set_page('dax_identity');"
           }
         ]
@@ -67,15 +67,15 @@
       "id": "dax_identity",
       "speaker": "npc",
       "lines": [
-        "Sou Dax, da Unidade de Contenção de Keitai. Eu não brinco de treinador, eu neutralizo ameaças do Ultra-Vazio.",
-        "Mas bem, vou lhe fazer um favor e dar o privilégio de testar suas 'habilidades' contra um profissional de verdade!"
+        {"translate": "dialogue.voyager.dax_initial_chat.dax_identity.line1"},
+        {"translate": "dialogue.voyager.dax_initial_chat.dax_identity.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Pode vir!",
+            "text": {"translate": "dialogue.voyager.dax_initial_chat.dax_identity.option1"},
             "value": "battle",
             "action": [
               "q.npc.start_battle(q.player, 'single');",
@@ -84,7 +84,7 @@
             ]
           },
           {
-            "text": "Battle x2",
+            "text": {"translate": "dialogue.voyager.dax_initial_chat.dax_identity.option2"},
             "value": "battle",
             "action": [
               "q.npc.start_battle(q.player, 'double');",
@@ -92,9 +92,8 @@
               "q.dialogue.close();"
             ]
           },
-
           {
-            "text": "Agora não.",
+            "text": {"translate": "dialogue.voyager.dax_initial_chat.dax_identity.option3"},
             "value": "cancel",
             "action": [
               "q.dialogue.close();"

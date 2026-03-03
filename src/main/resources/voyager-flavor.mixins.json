@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.voyager.edition.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ExampleMixin",
+		"CatchNpcPokemonMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

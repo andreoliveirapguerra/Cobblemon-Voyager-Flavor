@@ -24,7 +24,7 @@
       "id": "greetings",
       "speaker": "npc",
       "lines": [
-        "Olá! Bem vindo ao maravilhoso mundo de Pokemon!"
+        {"translate": "dialogue.voyager.redwood_intro.greetings.line1"}
       ],
       "input": "q.dialogue.set_page('briefing');"
     },
@@ -32,18 +32,18 @@
       "id": "briefing",
       "speaker": "npc",
       "lines": [
-        "Você ja conhece o que são Pokemons?"
+        {"translate": "dialogue.voyager.redwood_intro.briefing.line1"}
       ],
       "input": {
         "type": "option",
         "vertical": false,
         "options": [
           {
-            "text": "Não.",
+            "text": {"translate": "dialogue.voyager.redwood_intro.briefing.option1"},
             "action": "q.dialogue.set_page('explaining');"
           },
           {
-            "text": "Sim.",
+            "text": {"translate": "dialogue.voyager.redwood_intro.briefing.option2"},
             "action": "q.dialogue.set_page('good_luck');"
           }
         ]
@@ -53,9 +53,9 @@
       "id": "explaining",
       "speaker": "npc",
       "lines": [
-        "Esse mundo é habitado por criaturas maravilhosas chamadas de POKEMON!",
-        "Para algumas pessoas, POKEMON são pets. Outros usam para batalhar.",
-        "Eu...Eu estudo POKEMON como uma profissão. Primeiramente, qual o seu nome?"
+        {"translate": "dialogue.voyager.redwood_intro.explaining.line1"},
+        {"translate": "dialogue.voyager.redwood_intro.explaining.line2"},
+        {"translate": "dialogue.voyager.redwood_intro.explaining.line3"}
       ],
       "input": "q.dialogue.set_page('explain_pt2');"
     },
@@ -77,7 +77,7 @@
       "id": "rival_intro",
       "speaker": "npc",
       "lines": [
-        "Esse é Dax! Ele é seu rival desde que vocês eram bebês!"
+        {"translate": "dialogue.voyager.redwood_intro.rival_intro.line1"}
       ],
       "input": "q.dialogue.set_page('good_luck');"
     },
@@ -85,15 +85,15 @@
       "id": "good_luck",
       "speaker": "npc",
       "lines": [
-        "A sua própria lenda Pokemon está preste a se desenrolar!",
-        "Um mundo de sonhos e aventuras o aguarda! Vamos lá!"
+        {"translate": "dialogue.voyager.redwood_intro.good_luck.line1"},
+        {"translate": "dialogue.voyager.redwood_intro.good_luck.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Começar Aventura",
+            "text": {"translate": "dialogue.voyager.redwood_intro.good_luck.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_journey_started');",
               "q.run_command('voyager startGame ' + q.player.username);",

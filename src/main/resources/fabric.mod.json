@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
 	"id": "voyager-flavor",
-	"version": "0.47.57",
+	"version": "alpha-1.0.0",
 	"name": "Voyager Flavor",
-	"description": "Adds Quests and And lore (W.I.P)",
+	"description": "Adds Quests and And lore (W.I.P), also adds outside battle dynamax",
 	"authors": [
 		"HungryJesus"
 	],
@@ -14,6 +14,10 @@
 	"license": "CC0-1.0",
 	"icon": "assets/voyager-flavor/icon.png",
 	"environment": "*",
+	"mixins": [
+		"voyager-flavor.mixins.json",
+		"voyager-flavor.client.mixins.json"
+	],
 	"entrypoints": {
 		"main": [
 			{

@@ -9,7 +9,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import com.cobblemon.mod.common.Cobblemon
+import com.cobblemon.mod.common.api.events.CobblemonEvents
+import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.party
+import com.cobblemon.mod.common.util.server
 import com.voyager.edition.registry.VoyagerTrainerData
 import com.voyager.edition.utils.VoyagerUtils.Companion.findSafeSurfaceSpace
 import com.voyager.edition.utils.VoyagerUtils.Companion.runCommand
@@ -18,6 +21,9 @@ import com.voyager.edition.utils.VoyagerUtils.Companion.spawnProfessor
 import com.voyager.edition.utils.VoyagerUtils.Companion.spawnVanceAt
 import net.minecraft.network.chat.Component
 import net.minecraft.ChatFormatting
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.block.Block
 
 object VoyagerEvents {
     var spawnedVance = false
@@ -137,6 +143,53 @@ object VoyagerEvents {
                         player.tags.removeIf { it.contains("voyager_lyra_event") }
                     }
                 }
+            }
+        }
+
+        CobblemonEvents.BATTLE_STARTED_POST.subscribe { battle ->
+            val trainerA  = battle.battle.actors.first()
+            val trainerB  = battle.battle.actors.last()
+
+            if (trainerA.type.name.lowercase().contains("player") &&
+                !trainerB.type.name.lowercase().contains("player")
+                && !trainerA.pokemonList.first().originalPokemon.isWild()) {
+                trainerB.pokemonList.forEach { pokemon ->
+                    pokemon.originalPokemon.persistentData.putBoolean("voyager_catchable", true)
+                    pokemon.entity?.pokemon?.persistentData?.putBoolean("voyager_catchable", true)
+                }
+                VoyagerFlavor.LOGGER.info("[Voyager]: Player X Npc Battle, able to catch")
+
+            }
+            else if (!trainerA.type.name.lowercase().contains("player") &&
+                trainerB.type.name.lowercase().contains("player")) {
+                trainerA.pokemonList.forEach { pokemon ->
+                    pokemon.originalPokemon.persistentData.putBoolean("voyager_catchable", true)
+                    pokemon.entity?.pokemon?.persistentData?.putBoolean("voyager_catchable", true)
+                }
+                VoyagerFlavor.LOGGER.info("[Voyager]: NPC X PLayer Battle, able to catch")
+
+            } else {
+                VoyagerFlavor.LOGGER.error("[Voyager]: Player X Player Battle, unable to catch")
+            }
+        }
+
+        CobblemonEvents.THROWN_POKEBALL_HIT.subscribe { hitEvent ->
+            val player: Player = hitEvent.pokeBall.effectSource as Player
+            val pokemon = hitEvent.pokemon.pokemon
+
+            if (player in hitEvent.pokemon.server!!.playerList.players) {
+                if (pokemon.persistentData.getBoolean("voyager_catchable")) {
+                    VoyagerFlavor.LOGGER.info("${player.name.string} is attempting to catch another trainer PKMN!")
+
+                    sendPlayerMessage(
+                        player as ServerPlayer,
+                        "[${pokemon.originalTrainer}] BASTARD! DONT STEAL MY POKEMON!!!",
+                        ChatFormatting.DARK_RED)
+
+                    // TODO: Add some kind of punishment for player (Ex: add to a WantedList or decrease CatchRate calculator values or both!)
+                }
+            } else {
+                VoyagerFlavor.LOGGER.error("[Voyager]-> Player not in player list????")
             }
         }
     }

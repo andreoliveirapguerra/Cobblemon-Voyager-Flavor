@@ -13,10 +13,13 @@
     {
       "id": "greeting",
       "speaker": "npc",
-      "lines": ["Hey, you're finally awake!", "Remember what Happened? We were at the gym, then it all started shaking",
-        "and the ground suddenly collapsed!",
-        "Your father is injured, we need to find a way out quickly!",
-        "See you next time!"],
+      "lines": [
+        {"translate": "dialogue.voyager.redwood_start_cave.greeting.line1"},
+        {"translate": "dialogue.voyager.redwood_start_cave.greeting.line2"},
+        {"translate": "dialogue.voyager.redwood_start_cave.greeting.line3"},
+        {"translate": "dialogue.voyager.redwood_start_cave.greeting.line4"},
+        {"translate": "dialogue.voyager.redwood_start_cave.greeting.line5"}
+      ],
       "input": "q.dialogue.close();"
     }
   ]

@@ -25,7 +25,7 @@
       "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "[ Lendo dados do jogador... ]"
+        {"translate": "dialogue.voyager.redwood_main.greeting.line1"}
       ],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
@@ -43,7 +43,7 @@
         "vertical": false,
         "options": [
           {
-            "text": "Iniciar Introdução",
+            "text": {"translate": "dialogue.voyager.redwood_main.intro.option1"},
             "action": [
               "v.callback_dialogue = 'redwood_intro';",
               "c.npc.run_action_effect('change_dialogue_callback');",
@@ -68,7 +68,7 @@
         "vertical": false,
         "options": [
           {
-            "text": "Iniciar Jogo",
+            "text": {"translate": "dialogue.voyager.redwood_main.main.option1"},
             "action": [
               "v.callback_dialogue = 'redwood_chat';",
               "c.npc.run_action_effect('change_dialogue_callback');",

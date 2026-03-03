@@ -32,37 +32,40 @@
       "clientActions": [
         "q.face.play_animation('win');"
       ],
-      "lines": ["Hello! You can call me nurse Joy as many do!"],
+      "lines": [{"translate": "dialogue.voyager.joy_chat.greeting.line1"}],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
     {
       "id": "no_healer",
       "speaker": "npc",
-      "lines": ["I would offer to heal your Pokémon, but I can't seem to find my healing machine...", "I'm sorry about that!"],
+      "lines": [
+        {"translate": "dialogue.voyager.joy_chat.no_healer.line1"},
+        {"translate": "dialogue.voyager.joy_chat.no_healer.line2"}
+      ],
       "input": "q.dialogue.close();"
     },
     {
       "id": "full_health",
       "speaker": "npc",
-      "lines": ["I would offer to heal your Pokémon for you, but your Pokémon are completely healthy!"],
+      "lines": [{"translate": "dialogue.voyager.joy_chat.full_health.line1"}],
       "input": "q.dialogue.close();"
     },
     {
       "id": "no_charge",
       "speaker": "npc",
-      "lines": ["I'd like to heal your Pokémon but my machine is busy! Please come back later!"],
+      "lines": [{"translate": "dialogue.voyager.joy_chat.no_charge.line1"}],
       "input": "q.dialogue.close();"
     },
     {
       "id": "has_charge",
       "speaker": "npc",
-      "lines": ["Would you like me to heal your Pokémon?"],
+      "lines": [{"translate": "dialogue.voyager.joy_chat.has_charge.line1"}],
       "input": {
         "type": "option",
         "vertical": false,
         "options": [
           {
-            "text": "Yes",
+            "text": {"translate": "dialogue.voyager.joy_chat.has_charge.option1"},
             "value": "yes",
             "action": [
               "v.callback_dialogue = 'sacchi_healed';",
@@ -71,7 +74,7 @@
             ]
           },
           {
-            "text": "No",
+            "text": {"translate": "dialogue.voyager.joy_chat.has_charge.option2"},
             "value": "no",
             "action": "q.dialogue.set_page('okbye');"
           }
@@ -81,7 +84,7 @@
     {
       "id": "okbye",
       "speaker": "npc",
-      "lines": ["Alright, see you later!"],
+      "lines": [{"translate": "dialogue.voyager.joy_chat.okbye.line1"}],
       "input": "q.dialogue.close();"
     }
   ]

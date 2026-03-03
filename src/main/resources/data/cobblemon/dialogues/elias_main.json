@@ -26,15 +26,15 @@
       "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "Então... você conseguiu descer até aqui usando o Link.",
-        "Eu sou Elias. Antes eu construía as máquinas que hoje nos prendem. Agora eu vivo entre o lixo que elas deixam."
+        {"translate": "dialogue.voyager.elias_main.greeting.line1"},
+        {"translate": "dialogue.voyager.elias_main.greeting.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "O que é este lugar?",
+            "text": {"translate": "dialogue.voyager.elias_main.greeting.option1"},
             "action": "q.dialogue.set_page('sector_explain');"
           }
         ]
@@ -44,15 +44,15 @@
       "id": "sector_explain",
       "speaker": "npc",
       "lines": [
-        "O Setor Zero é onde a Fundação joga tudo que não consegue explicar.",
-        "Aqui as fendas nascem sem controle. E aqui você vai precisar disto..."
+        {"translate": "dialogue.voyager.elias_main.sector_explain.line1"},
+        {"translate": "dialogue.voyager.elias_main.sector_explain.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Receber Traje de Proteção]",
+            "text": {"translate": "dialogue.voyager.elias_main.sector_explain.option1"},
             "action": [
               "q.run_command('give ' + q.player.username + ' voyager-flavor:anti_radiation_suit 1');",
               "q.run_command('tag ' + q.player.username + ' add voyager_met_elias');",
@@ -66,8 +66,8 @@
       "id": "post_give",
       "speaker": "npc",
       "lines": [
-        "Este traje vai te proteger enquanto você explora mais fundo.",
-        "Cuidado com as anomalias. Elas ficam maiores quanto mais você se aprofunda no Zero."
+        {"translate": "dialogue.voyager.elias_main.post_give.line1"},
+        {"translate": "dialogue.voyager.elias_main.post_give.line2"}
       ],
       "input": "q.dialogue.close();"
     },
@@ -75,8 +75,8 @@
       "id": "return",
       "speaker": "npc",
       "lines": [
-        "Você voltou. O Zero muda as pessoas... ou revela o que sempre esteve lá.",
-        "O que está procurando desta vez?"
+        {"translate": "dialogue.voyager.elias_main.return.line1"},
+        {"translate": "dialogue.voyager.elias_main.return.line2"}
       ],
       "input": "q.dialogue.close();"
     }

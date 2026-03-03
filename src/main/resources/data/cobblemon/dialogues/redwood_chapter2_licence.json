@@ -17,14 +17,14 @@
     {
       "id": "grant_license",
       "lines": [
-        "Aqui está, Cadete. Sua Licença de Treinador e sua Badge Box.",
-        "Você agora é oficialmente um representante da Academia de Keitai na superfície."
+        {"translate": "dialogue.voyager.redwood_chapter2_licence.grant_license.line1"},
+        {"translate": "dialogue.voyager.redwood_chapter2_licence.grant_license.line2"}
       ],
       "input": {
         "type": "option",
         "options": [
           {
-            "text": "Obrigado, Professor. Qual o meu próximo objetivo?",
+            "text": {"translate": "dialogue.voyager.redwood_chapter2_licence.grant_license.option1"},
             "action": "q.dialogue.set_page('next_objective');"
           }
         ]
@@ -33,15 +33,15 @@
     {
       "id": "next_objective",
       "lines": [
-        "Vá para a Rota 1. Há relatos de distorções magnéticas perto do primeiro Ginásio.",
-        "Mas cuidado... Dax, o cadete da Unidade de Contenção, também foi enviado para lá.",
-        "Ele é competitivo e não gosta de ser superado. Ele estará vigiando seu progresso."
+        {"translate": "dialogue.voyager.redwood_chapter2_licence.next_objective.line1"},
+        {"translate": "dialogue.voyager.redwood_chapter2_licence.next_objective.line2"},
+        {"translate": "dialogue.voyager.redwood_chapter2_licence.next_objective.line3"}
       ],
       "input": {
         "type": "option",
         "options": [
           {
-            "text": "Dax? Eu posso lidar com ele.",
+            "text": {"translate": "dialogue.voyager.redwood_chapter2_licence.next_objective.option1"},
             "action": [
               "c.player.tags.add('voyager_ch2_started');",
               "q.dialogue.close();"

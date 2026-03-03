@@ -27,7 +27,7 @@
       "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "[ Lendo dados do jogador... ]"
+        {"translate": "dialogue.voyager.harpy_main.greeting.line1"}
       ],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
@@ -35,15 +35,15 @@
       "id": "first_contact",
       "speaker": "npc",
       "lines": [
-        "Você carrega dois livros agora... um de ferro, outro de cinzas.",
-        "Eu vejo o que os outros escondem. Meu nome é Harpy."
+        {"translate": "dialogue.voyager.harpy_main.first_contact.line1"},
+        {"translate": "dialogue.voyager.harpy_main.first_contact.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Como você sabe dos livros?",
+            "text": {"translate": "dialogue.voyager.harpy_main.first_contact.option1"},
             "action": "q.dialogue.set_page('harpy_knowledge');"
           }
         ]
@@ -53,16 +53,16 @@
       "id": "harpy_knowledge",
       "speaker": "npc",
       "lines": [
-        "Eu leio as fendas antes de elas se abrirem.",
-        "O Setor Zero está chamando. Lá embaixo está a verdade que a Fundação e o Hypnos querem esconder.",
-        "Leve isto. Ele vai te mostrar caminhos que ninguém mais vê."
+        {"translate": "dialogue.voyager.harpy_main.harpy_knowledge.line1"},
+        {"translate": "dialogue.voyager.harpy_main.harpy_knowledge.line2"},
+        {"translate": "dialogue.voyager.harpy_main.harpy_knowledge.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Receber Link de Tunelamento]",
+            "text": {"translate": "dialogue.voyager.harpy_main.harpy_knowledge.option1"},
             "action": [
               "q.run_command('voyager giveLinkTunelamento ' + q.player.username);",
               "q.run_command('voyager triggerUltraEvent 1 ' + q.player.username);",
@@ -77,8 +77,8 @@
       "id": "return",
       "speaker": "npc",
       "lines": [
-        "Você está aqui de novo. O Setor Zero muda quem desce até lá.",
-        "Vá fundo. A resposta não está na superfície."
+        {"translate": "dialogue.voyager.harpy_main.return.line1"},
+        {"translate": "dialogue.voyager.harpy_main.return.line2"}
       ],
       "input": "q.dialogue.close();"
     },
@@ -86,22 +86,22 @@
       "id": "fenda_choice",
       "speaker": "npc",
       "lines": [
-        "A Fenda do Equilíbrio se abriu. Agora você precisa escolher.",
-        "Selar com a Fundação... ou estabilizar com o Hypnos."
+        {"translate": "dialogue.voyager.harpy_main.fenda_choice.line1"},
+        {"translate": "dialogue.voyager.harpy_main.fenda_choice.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Selar com a Fundação [Ordem]",
+            "text": {"translate": "dialogue.voyager.harpy_main.fenda_choice.option1"},
             "action": [
               "q.run_command('voyager moralChoice order ' + q.player.username);",
               "q.dialogue.close();"
             ]
           },
           {
-            "text": "Estabilizar com Hypnos [Caos]",
+            "text": {"translate": "dialogue.voyager.harpy_main.fenda_choice.option2"},
             "action": [
               "q.run_command('voyager moralChoice chaos ' + q.player.username);",
               "q.dialogue.close();"

@@ -23,116 +23,57 @@
   },
   "pages": [
     {
-      "id": "greeting",
+      "id": "greetings",
       "speaker": "npc",
       "lines": [
-        {
-          "type": "expression",
-          "expression": "'Muito bem cadete ' + q.player.username + ' eu reconheço seu potêncial.'"
-        },
-        "Sua primeira missão será ir para as cordenadas indicadadas pelo ULTRA-SCANNER e recuperar o objeto que está disparando os sensores."
+        {"translate": "dialogue.voyager.vance_chat.greetings.line1"},
+        {"translate": "dialogue.voyager.vance_chat.greetings.line2"}
+      ],
+      "input": "q.dialogue.set_page('briefing');"
+    },
+    {
+      "id": "briefing",
+      "speaker": "npc",
+      "lines": [
+        {"translate": "dialogue.voyager.vance_chat.briefing.line1"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Entendido. Não falharei nessa missão",
-            "action": "q.dialogue.set_page('challenge');"
+            "text": {"translate": "dialogue.voyager.vance_chat.briefing.option1"},
+            "action": "q.dialogue.set_page('explaining');"
           },
           {
-            "text": "Considere feito!",
-            "action": "q.dialogue.set_page('challenge');"
+            "text": {"translate": "dialogue.voyager.vance_chat.briefing.option2"},
+            "action": "q.dialogue.set_page('good_luck');"
           }
         ]
       }
     },
     {
-      "id": "challenge",
+      "id": "explaining",
       "speaker": "npc",
       "lines": [
-        "Palavras são fáceis. Aqui na fronteira, o que conta é a força do seu parceiro Pokémon e a sua estratégia no campo de batalha.",
-        "Se achar que precisa de mais treinamento, recomendo participar de batalhas, sua licença lhe indicara quem enfrentar para se fortalecer."
+        {"translate": "dialogue.voyager.vance_chat.explaining.line1"}
       ],
-      "input": {
-        "type": "option",
-        "vertical": true,
-        "options": [
-          {
-            "text": "Entendido, Capitão!",
-            "value": "battle",
-            "action": [
-              "q.dialogue.close();",
-              "q.run_command('voyager triggerLyraEvent ' +q.player.username);"
-            ]
-          },
-          {
-            "text": "Estou indo!",
-            "value": "battle",
-            "action": [
-              "q.dialogue.close();",
-              "q.run_command('voyager triggerLyraEvent ' +q.player.username);"
-            ]
-          }
-        ]
-      }
+      "input": [
+        "q.dialogue.close();",
+        "q.npc.start_battle(q.player, 'single');"
+      ]
     },
     {
-      "id": "post_battle",
+      "id": "good_luck",
       "speaker": "npc",
       "lines": [
-        {
-          "type": "expression",
-          "expression": "'Bem vindo de volta cadete '+q.player.username"
-        },
-        "Muito bem, vejo que conseguiu o artefato, teve algo pelo caminho?"
+        {"translate": "dialogue.voyager.vance_chat.good_luck.line1"},
+        {"translate": "dialogue.voyager.vance_chat.good_luck.line2"}
       ],
-      "input": {
-        "type": "option",
-        "vertical": true,
-        "options": [
-          {
-            "text": "Não teve nada de extraordinário",
-            "action": [
-              "q.run_command('tag ' + q.player.username + 'add voyager_doubt_1');",
-              "q.dialogue.close();"
-            ]
-          },
-          {
-            "text": "[Contar a Verdade]",
-            "action": [
-              "q.run_command('tag ' + q.player.username + 'add voyager_foundation_1');",
-              "q.dialogue.set_page('revealed_truth');"
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "id": "revealed_truth",
-      "speaker": "player",
-      "lines": [
-        "Encontrei uma tal de Lyra. Ela tinha umas ideias estranhas.",
-        "Mas não escutei e consegui pegar o artefato que ela havia roubado!"
-      ],
-      "input": "q.dialogue.set_page('congrat_vance');"
-    },
-    {
-      "id": "congrat_vance",
-      "speaker": "npc",
-      "lines": [
-        "O QUE? Digo... Não se preocupe, farei o relátorio do ocorrido.",
-        "Por hora volte e tente treinar batalhando contra alguns líderes de ginásio!"
-      ],
-      "input": "q.dialogue.set_page('WIP');"
-    },
-    {
-      "id": "WIP",
-      "speaker": "npc",
-      "lines": [
-        "O criador cansou depois dessa, por enquanto é só pessoal!"
-      ],
-      "input": "q.dialogue.close();"
+      "input": [
+        "q.dialogue.close();",
+        "q.npc.start_battle(q.player, 'single');"
+      ]
     }
   ]
 }

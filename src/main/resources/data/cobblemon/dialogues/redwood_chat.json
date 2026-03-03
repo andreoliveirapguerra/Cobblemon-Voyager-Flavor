@@ -29,7 +29,7 @@
       "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "[ *Bip*... Ultra-Scanner sintonizado. ]"
+        {"translate": "dialogue.voyager.redwood_chat.greeting.line1"}
       ],
       "input": [
         "v.landing_page = v.lic ? 'post_license' : (v.center ? 'arrival_at_center' : (v.cave ? 'ready_to_leave' : (v.met ? 'survival_tips' : 'crash_landing')));",
@@ -44,28 +44,28 @@
           "type": "expression",
           "expression": "'Finalmente você acordou ' + q.player.username + '! A queda foi feia... Os sensores de Redstone indicam que caímos em uma zona de instabilidade dimensional.'"
         },
-        "Nossos equipamentos estão espalhados pelos blocos desta caverna e a fauna local parece ter sido afetada por radiação do Ultra-Espaço. Estão extremamente agressivos!"
+        {"translate": "dialogue.voyager.redwood_chat.crash_landing.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Onde estamos?",
+            "text": {"translate": "dialogue.voyager.redwood_chat.crash_landing.option1"},
             "action": [
               "q.run_command('voyager spawnCenter '+q.player.username);",
               "q.dialogue.set_page('give_quest');"
             ]
           },
           {
-            "text": "Vi criaturas estranhas..",
+            "text": {"translate": "dialogue.voyager.redwood_chat.crash_landing.option2"},
             "action": [
               "q.dialogue.set_page('give_quest');",
               "q.run_command('voyager spawnCenter '+q.player.username);"
             ]
           },
           {
-            "text": "O que aconteceu?",
+            "text": {"translate": "dialogue.voyager.redwood_chat.crash_landing.option3"},
             "action": [
               "q.dialogue.set_page('give_quest');",
               "q.run_command('voyager spawnCenter '+q.player.username);"
@@ -78,15 +78,15 @@
       "id": "give_quest",
       "speaker": "npc",
       "lines": [
-        "Ainda estou processando os dados, mas estamos abaixo da rede principal de Keitai. Pegue este Ultra-Scanner; ele vai monitorar suas metas e detectar assinaturas de Ultra-Fendas.",
-        "Preciso que você limpe o perímetro desta caverna batalhando contra os Pokémon hostis enquanto eu tento reativar o sinal de teletransporte."
+        {"translate": "dialogue.voyager.redwood_chat.give_quest.line1"},
+        {"translate": "dialogue.voyager.redwood_chat.give_quest.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Pegar Dispositivo] Deixe comigo!",
+            "text": {"translate": "dialogue.voyager.redwood_chat.give_quest.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_met_redwood');",
               "q.run_command('voyager startcavechallenge ' + q.player.username);",
@@ -94,11 +94,11 @@
             ]
           },
           {
-            "text": "Como funciona?",
+            "text": {"translate": "dialogue.voyager.redwood_chat.give_quest.option2"},
             "action": "q.dialogue.set_page('give_quest_extra_1');"
           },
           {
-            "text": "Espero q de certo.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.give_quest.option3"},
             "action": "q.dialogue.set_page('give_quest_extra_2');"
           }
         ]
@@ -108,15 +108,15 @@
       "id": "give_quest_extra_1",
       "speaker": "npc",
       "lines": [
-        "Ele está sintonizado com as frequências da Fundação Voyager. Assim que você derrotar as anomalias locais, ele atualizará nosso status automaticamente.",
-        "Pegue-o e vamos ao trabalho, não temos muito tempo."
+        {"translate": "dialogue.voyager.redwood_chat.give_quest_extra_1.line1"},
+        {"translate": "dialogue.voyager.redwood_chat.give_quest_extra_1.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Pegar Dispositivo] Entendido.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.give_quest_extra_1.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_met_redwood');",
               "q.run_command('ftbquests open_book ' + q.player.username);",
@@ -135,13 +135,13 @@
           "type": "expression",
           "expression": "'Seu parceiro é forte, ' + q.player.username + ', confie no vínculo de vocês. Mas não subestime a radiação deste lugar.'"
         },
-        "Pegue o dispositivo, ele será o nosso guia."
+        {"translate": "dialogue.voyager.redwood_chat.give_quest_extra_2.line2"}
       ],
       "input": {
         "type": "option",
         "options": [
           {
-            "text": "[Pegar Dispositivo] Entendido.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.give_quest_extra_2.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_met_redwood');",
               "q.run_command('ftbquests open_book ' + q.player.username);",
@@ -160,13 +160,13 @@
           "type": "expression",
           "expression": "'Mantenha o foco, Voyager ' + q.player.username + '! O ar aqui embaixo está carregado de partículas de energia negativa.'"
         },
-        "Consulte o seu Diário de Missões frequentemente. Só poderemos sair daqui quando o Scanner confirmar que a área está limpa."
+        {"translate": "dialogue.voyager.redwood_chat.survival_tips.line2"}
       ],
       "input": {
         "type": "option",
         "options": [
           {
-            "text": "[Fechar]",
+            "text": {"translate": "dialogue.voyager.redwood_chat.survival_tips.option1"},
             "action": "q.dialogue.close();"
           }
         ]
@@ -180,14 +180,14 @@
           "type": "expression",
           "expression": "'Trabalho impecável ' + q.player.username + '! O Ultra-Scanner confirmou: a atividade hostil de nível baixo cessou. Suas habilidades de combate superam as expectativas. Não há UltraBeasts(UB) por perto!'"
         },
-        "Consegui estabilizar o sinal de teletransporte para o Centro de Recuperação da Fundação mais próximo. Vamos?"
+        {"translate": "dialogue.voyager.redwood_chat.ready_to_leave.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Meus Pokémon precisam de um descanso.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.ready_to_leave.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_at_center');",
               "q.run_command('voyager pokecentertp ' + q.player.username);",
@@ -195,11 +195,11 @@
             ]
           },
           {
-            "text": "O sinal é seguro?",
+            "text": {"translate": "dialogue.voyager.redwood_chat.ready_to_leave.option2"},
             "action": "q.dialogue.set_page('leave_extra');"
           },
           {
-            "text": "Estou pronto. Keitai nos espera.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.ready_to_leave.option3"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_at_center');",
               "q.run_command('voyager pokecentertp ' + q.player.username);",
@@ -217,13 +217,13 @@
           "type": "expression",
           "expression": "'Não se preocupe, ' + q.player.username + ', eu calibrei a frequência para criptografar a nossa assinatura e fechar a conexão no instante em que passarmos. É seguro.'"
         },
-        "Pronto para ir?"
+        {"translate": "dialogue.voyager.redwood_chat.leave_extra.line2"}
       ],
       "input": {
         "type": "option",
         "options": [
           {
-            "text": "Sim! Vamos nessa.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.leave_extra.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_at_center');",
               "q.run_command('voyager pokecentertp ' + q.player.username);",
@@ -231,7 +231,7 @@
             ]
           },
           {
-            "text": "Espere, preciso me preparar",
+            "text": {"translate": "dialogue.voyager.redwood_chat.leave_extra.option2"},
             "action": "q.dialogue.close();"
           }
         ]
@@ -241,23 +241,23 @@
       "id": "arrival_at_center",
       "speaker": "npc",
       "lines": [
-        "E aqui estamos. Nada como o som de uma Estação de Cura de Redstone funcionando perfeitamente, não acha? Recupere suas forças.",
-        "Enquanto você estava na caverna, eu processei seus registros de combate e enviei para a sede da Academia."
+        {"translate": "dialogue.voyager.redwood_chat.arrival_at_center.line1"},
+        {"translate": "dialogue.voyager.redwood_chat.arrival_at_center.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "O que a Academia disse sobre o incidente?",
+            "text": {"translate": "dialogue.voyager.redwood_chat.arrival_at_center.option1"},
             "action": "q.dialogue.set_page('the_license');"
           },
           {
-            "text": "As Re:Vive são muito eficientes",
+            "text": {"translate": "dialogue.voyager.redwood_chat.arrival_at_center.option2"},
             "action": "q.dialogue.set_page('the_license');"
           },
           {
-            "text": "Sinto que estamos sendo observados...",
+            "text": {"translate": "dialogue.voyager.redwood_chat.arrival_at_center.option3"},
             "action": "q.dialogue.set_page('the_license');"
           }
         ]
@@ -267,15 +267,15 @@
       "id": "the_license",
       "speaker": "npc",
       "lines": [
-        "Como você é um dos melhores alunos da nossa turma em Keitai, decidi não esperar o retorno formal. Pelos meus poderes como supervisor da Fundação Voyager, aqui está sua Licença Oficial de Treinador.",
-        "E leve isto também: uma Badge Box. Ela é feita de uma liga resistente a distorções, perfeita para guardar as insígnias que você conquistará no League Challenge."
+        {"translate": "dialogue.voyager.redwood_chat.the_license.line1"},
+        {"translate": "dialogue.voyager.redwood_chat.the_license.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Receber Itens] É uma honra representar a Academia.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.the_license.option1"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_has_license');",
               "q.run_command('give ' + q.player.username + ' rctmod:trainer_card 1');",
@@ -284,7 +284,7 @@
             ]
           },
           {
-            "text": "O exame continua mesmo com as UB em ativa?",
+            "text": {"translate": "dialogue.voyager.redwood_chat.the_license.option2"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_has_license');",
               "q.run_command('give ' + q.player.username + ' rctmod:trainer_card 1');",
@@ -293,7 +293,7 @@
             ]
           },
           {
-            "text": "Uma Badge Box... O primeiro passo para ser Mestre.",
+            "text": {"translate": "dialogue.voyager.redwood_chat.the_license.option3"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_has_license');",
               "q.run_command('give ' + q.player.username + ' rctmod:trainer_card 1');",
@@ -308,15 +308,15 @@
       "id": "post_license",
       "speaker": "npc",
       "lines": [
-        "Aproveite as instalações do Centro de Recuperação e prepare sua equipe.",
-        "A região de Keitai tem muitos desafios pela frente, mas confio plenamente nas suas habilidades, Voyager."
+        {"translate": "dialogue.voyager.redwood_chat.post_license.line1"},
+        {"translate": "dialogue.voyager.redwood_chat.post_license.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Fechar]",
+            "text": {"translate": "dialogue.voyager.redwood_chat.post_license.option1"},
             "action": [
               "q.dialogue.close();",
               "q.run_command('voyager spawnRival ' + q.player.username);"
@@ -333,18 +333,18 @@
           "type": "expression",
           "expression": "q.player.username + ', seu primeiro teste após conseguir sua licença é falar com o capitão Vance.'"
         },
-        "Você ficará sob o comando dele e fará missões de reconhecimento e patrulha por anomalias. Ele é meio rigoroso então provavelmente irá querer testá-lo"
+        {"translate": "dialogue.voyager.redwood_chat.intro_vance.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Independentemente do que ele tiver guardado, estarei pronto!",
+            "text": {"translate": "dialogue.voyager.redwood_chat.intro_vance.option1"},
             "action": "q.dialogue.close();"
           },
           {
-            "text": "Espero que consiga lidar com ele...",
+            "text": {"translate": "dialogue.voyager.redwood_chat.intro_vance.option2"},
             "action": "q.dialogue.close();"
           }
         ]

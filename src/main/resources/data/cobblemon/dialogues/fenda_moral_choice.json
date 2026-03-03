@@ -28,23 +28,23 @@
       "id": "fenda_aparece",
       "speaker": "npc",
       "lines": [
-        "A fenda maior se abriu. Agora você precisa escolher.",
-        "Selar com a Fundação... ou estabilizar com o Hypnos.",
-        "Não existe resposta certa. Existe a que você consegue viver."
+        {"translate": "dialogue.voyager.fenda_moral_choice.fenda_aparece.line1"},
+        {"translate": "dialogue.voyager.fenda_moral_choice.fenda_aparece.line2"},
+        {"translate": "dialogue.voyager.fenda_moral_choice.fenda_aparece.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Selar com a Fundação [Ordem]",
+            "text": {"translate": "dialogue.voyager.fenda_moral_choice.fenda_aparece.option1"},
             "action": [
               "q.run_command('voyager moralChoice order ' + q.player.username);",
               "q.dialogue.close();"
             ]
           },
           {
-            "text": "Estabilizar com Hypnos [Caos]",
+            "text": {"translate": "dialogue.voyager.fenda_moral_choice.fenda_aparece.option2"},
             "action": [
               "q.run_command('voyager moralChoice chaos ' + q.player.username);",
               "q.dialogue.close();"
@@ -57,8 +57,8 @@
       "id": "already_chose",
       "speaker": "npc",
       "lines": [
-        "Você já fez sua escolha.",
-        "Viva com ela."
+        {"translate": "dialogue.voyager.fenda_moral_choice.already_chose.line1"},
+        {"translate": "dialogue.voyager.fenda_moral_choice.already_chose.line2"}
       ],
       "input": "q.dialogue.close();"
     }

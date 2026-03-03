@@ -25,7 +25,7 @@
     {
       "id": "hub",
       "speaker": "npc",
-      "lines": ["..."],
+      "lines": [{"translate": "dialogue.voyager.elias_chat.hub.line1"}],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
     {
@@ -36,23 +36,23 @@
           "type": "expression",
           "expression": "'Então... você desceu. Usou o Link da Harpy, né? Eu senti a distorção quando você atravessou a parede.'"
         },
-        "Sou Elias. Antes eu consertava os geradores que mantêm essas ilhas no ar. Agora eu vivo do que sobra delas.",
-        "Você não veio aqui pra bater papo. Veio atrás de respostas que a Academia não dá."
+        {"translate": "dialogue.voyager.elias_chat.first_meeting.line2"},
+        {"translate": "dialogue.voyager.elias_chat.first_meeting.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "O que é esse lugar de verdade?",
+            "text": {"translate": "dialogue.voyager.elias_chat.first_meeting.option1"},
             "action": "q.dialogue.set_page('sector_explain');"
           },
           {
-            "text": "Como você sabe da Harpy?",
+            "text": {"translate": "dialogue.voyager.elias_chat.first_meeting.option2"},
             "action": "q.dialogue.set_page('harpy_question');"
           },
           {
-            "text": "Preciso de ajuda com radiação. Tem algo que sirva?",
+            "text": {"translate": "dialogue.voyager.elias_chat.first_meeting.option3"},
             "action": "q.dialogue.set_page('anti_rad_suit');"
           }
         ]
@@ -62,20 +62,20 @@
       "id": "sector_explain",
       "speaker": "npc",
       "lines": [
-        "Isso aqui é o Setor Zero. Onde a Fundação joga tudo que não consegue explicar ou consertar.",
-        "Sucata radioativa, protótipos falhos, corpos de Pokémon que não aguentaram os testes... e fendas que ninguém admite que existem.",
-        "Aqui embaixo a Redstone não manda. É o único lugar onde o universo ainda consegue respirar."
+        {"translate": "dialogue.voyager.elias_chat.sector_explain.line1"},
+        {"translate": "dialogue.voyager.elias_chat.sector_explain.line2"},
+        {"translate": "dialogue.voyager.elias_chat.sector_explain.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "A Fundação sabe disso tudo?",
+            "text": {"translate": "dialogue.voyager.elias_chat.sector_explain.option1"},
             "action": "q.dialogue.set_page('foundation_truth');"
           },
           {
-            "text": "Me ajuda a sobreviver aqui embaixo?",
+            "text": {"translate": "dialogue.voyager.elias_chat.sector_explain.option2"},
             "action": "q.dialogue.set_page('anti_rad_suit');"
           }
         ]
@@ -85,8 +85,8 @@
       "id": "foundation_truth",
       "speaker": "npc",
       "lines": [
-        "Eles sabem. Só fingem que não. O Setor Zero é o preço do progresso deles.",
-        "Eles chamam de 'lixo inevitável'. Eu chamo de verdade."
+        {"translate": "dialogue.voyager.elias_chat.foundation_truth.line1"},
+        {"translate": "dialogue.voyager.elias_chat.foundation_truth.line2"}
       ],
       "input": "q.dialogue.set_page('anti_rad_suit');"
     },
@@ -94,9 +94,9 @@
       "id": "harpy_question",
       "speaker": "npc",
       "lines": [
-        "Harpy? Ela não trabalha pra ninguém. Nem pra Fundação, nem pro Hypnos.",
-        "Ela só... observa. E às vezes ajuda quem está no meio do fogo cruzado.",
-        "Você está no meio agora. Cuidado."
+        {"translate": "dialogue.voyager.elias_chat.harpy_question.line1"},
+        {"translate": "dialogue.voyager.elias_chat.harpy_question.line2"},
+        {"translate": "dialogue.voyager.elias_chat.harpy_question.line3"}
       ],
       "input": "q.dialogue.set_page('anti_rad_suit');"
     },
@@ -104,15 +104,15 @@
       "id": "anti_rad_suit",
       "speaker": "npc",
       "lines": [
-        "Aqui embaixo a radiação come HP dos seus Pokémon fora de batalha. Sem proteção você não dura 10 minutos.",
-        "Eu tenho algo que sobrou de um protótipo antigo. Não é bonito, mas funciona."
+        {"translate": "dialogue.voyager.elias_chat.anti_rad_suit.line1"},
+        {"translate": "dialogue.voyager.elias_chat.anti_rad_suit.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "[Receber Traje de Proteção]",
+            "text": {"translate": "dialogue.voyager.elias_chat.anti_rad_suit.option1"},
             "action": [
               "q.run_command('give ' + q.player.username + ' voyager_flavor:anti_radiation_suit 1');",
               "q.run_command('tag ' + q.player.username + ' add voyager_met_elias');",
@@ -120,7 +120,7 @@
             ]
           },
           {
-            "text": "Obrigado. Talvez eu volte depois.",
+            "text": {"translate": "dialogue.voyager.elias_chat.anti_rad_suit.option2"},
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_met_elias');",
               "q.dialogue.set_page('farewell');"
@@ -133,8 +133,8 @@
       "id": "farewell",
       "speaker": "npc",
       "lines": [
-        "Use com cuidado. E não confie em ninguém aqui embaixo... nem em mim.",
-        "Volte quando quiser. Ou quando precisar."
+        {"translate": "dialogue.voyager.elias_chat.farewell.line1"},
+        {"translate": "dialogue.voyager.elias_chat.farewell.line2"}
       ],
       "input": "q.dialogue.close();"
     },
@@ -142,19 +142,19 @@
       "id": "reencounter",
       "speaker": "npc",
       "lines": [
-        "Você voltou. O Setor Zero ainda não te matou... bom sinal.",
-        "Precisa de algo? Ou só veio ver se eu ainda tô vivo?"
+        {"translate": "dialogue.voyager.elias_chat.reencounter.line1"},
+        {"translate": "dialogue.voyager.elias_chat.reencounter.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Preciso de mais proteção / upgrades.",
+            "text": {"translate": "dialogue.voyager.elias_chat.reencounter.option1"},
             "action": "q.dialogue.set_page('reencounter_help');"
           },
           {
-            "text": "Só vim conversar.",
+            "text": {"translate": "dialogue.voyager.elias_chat.reencounter.option2"},
             "action": "q.dialogue.set_page('farewell');"
           }
         ]
@@ -164,8 +164,8 @@
       "id": "reencounter_help",
       "speaker": "npc",
       "lines": [
-        "Tenho algumas peças sobrando. Posso melhorar o traje ou consertar algo que você trouxe.",
-        "Mas vai custar sucata ou tempo. O que você tem aí?"
+        {"translate": "dialogue.voyager.elias_chat.reencounter_help.line1"},
+        {"translate": "dialogue.voyager.elias_chat.reencounter_help.line2"}
       ],
       "input": "q.dialogue.close();"
     }

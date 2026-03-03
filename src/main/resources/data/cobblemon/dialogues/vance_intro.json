@@ -1,7 +1,9 @@
 {
-  "startPage": "greeting",
+  "startPage": "v.landing_page",
   "initializationAction": [
-    "c.npc.set_chatting();"
+    "c.npc.set_chatting();",
+    "v.met = q.player.has_tag('voyager_met_lyra');",
+    "v.landing_page = v.met ? 'greeting' : 'post_battle';"
   ],
   "speakers": {
     "npc": {
@@ -21,57 +23,116 @@
   },
   "pages": [
     {
-      "id": "greetings",
+      "id": "greeting",
       "speaker": "npc",
       "lines": [
-        "Relaxar Cadete. A partir de agora você é um dos pilares que protegem os cidadãos de Keitai",
-        "Suas obrigações serão realizar escoltas de itens e patrulhas portanto o ULTRA-SCANNER."
-      ],
-      "input": "q.dialogue.set_page('briefing');"
-    },
-    {
-      "id": "briefing",
-      "speaker": "npc",
-      "lines": [
-        "Mas antes disso..."
+        {
+          "type": "expression",
+          "expression": "'Muito bem cadete ' + q.player.username + ' eu reconheço seu potêncial.'"
+        },
+        {"translate": "dialogue.voyager.vance_intro.greeting.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Tenho um mal pressentimento...",
-            "action": "q.dialogue.set_page('explaining');"
+            "text": {"translate": "dialogue.voyager.vance_intro.greeting.option1"},
+            "action": "q.dialogue.set_page('challenge');"
           },
           {
-            "text": "Sem enrolação. VAMOS BATALHAR!",
-            "action": "q.dialogue.set_page('good_luck');"
+            "text": {"translate": "dialogue.voyager.vance_intro.greeting.option2"},
+            "action": "q.dialogue.set_page('challenge');"
           }
         ]
       }
     },
     {
-      "id": "explaining",
+      "id": "challenge",
       "speaker": "npc",
       "lines": [
-        "QUERO VER DO QUE VOCÊ É CAPAZ ATRAVÉS DE UMA BATALHA"
+        {"translate": "dialogue.voyager.vance_intro.challenge.line1"},
+        {"translate": "dialogue.voyager.vance_intro.challenge.line2"}
       ],
-      "input": [
-        "q.dialogue.close();",
-        "q.npc.start_battle(q.player, 'single');"
-      ]
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": {"translate": "dialogue.voyager.vance_intro.challenge.option1"},
+            "value": "battle",
+            "action": [
+              "q.dialogue.close();",
+              "q.run_command('voyager triggerLyraEvent ' +q.player.username);"
+            ]
+          },
+          {
+            "text": {"translate": "dialogue.voyager.vance_intro.challenge.option2"},
+            "value": "battle",
+            "action": [
+              "q.dialogue.close();",
+              "q.run_command('voyager triggerLyraEvent ' +q.player.username);"
+            ]
+          }
+        ]
+      }
     },
     {
-      "id": "good_luck",
+      "id": "post_battle",
       "speaker": "npc",
       "lines": [
-        "HÁ! GOSTEI DA ATITUDE!",
-        "Vejamos se tem habilidade para sustentar!"
+        {
+          "type": "expression",
+          "expression": "'Bem vindo de volta cadete '+q.player.username"
+        },
+        {"translate": "dialogue.voyager.vance_intro.post_battle.line2"}
       ],
-      "input": [
-        "q.dialogue.close();",
-        "q.npc.start_battle(q.player, 'single');"
-      ]
+      "input": {
+        "type": "option",
+        "vertical": true,
+        "options": [
+          {
+            "text": {"translate": "dialogue.voyager.vance_intro.post_battle.option1"},
+            "action": [
+              "q.run_command('tag ' + q.player.username + 'add voyager_doubt_1');",
+              "q.dialogue.close();"
+            ]
+          },
+          {
+            "text": {"translate": "dialogue.voyager.vance_intro.post_battle.option2"},
+            "action": [
+              "q.run_command('tag ' + q.player.username + 'add voyager_foundation_1');",
+              "q.dialogue.set_page('revealed_truth');"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "revealed_truth",
+      "speaker": "player",
+      "lines": [
+        {"translate": "dialogue.voyager.vance_intro.revealed_truth.line1"},
+        {"translate": "dialogue.voyager.vance_intro.revealed_truth.line2"}
+      ],
+      "input": "q.dialogue.set_page('congrat_vance');"
+    },
+    {
+      "id": "congrat_vance",
+      "speaker": "npc",
+      "lines": [
+        {"translate": "dialogue.voyager.vance_intro.congrat_vance.line1"},
+        {"translate": "dialogue.voyager.vance_intro.congrat_vance.line2"}
+      ],
+      "input": "q.dialogue.set_page('WIP');"
+    },
+    {
+      "id": "WIP",
+      "speaker": "npc",
+      "lines": [
+        {"translate": "dialogue.voyager.vance_intro.WIP.line1"}
+      ],
+      "input": "q.dialogue.close();"
     }
   ]
 }

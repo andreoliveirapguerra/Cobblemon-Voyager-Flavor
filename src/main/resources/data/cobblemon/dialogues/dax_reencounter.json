@@ -25,13 +25,13 @@
     {
       "id": "hub",
       "speaker": "npc",
-      "lines": ["..."],
+      "lines": [{"translate": "dialogue.voyager.dax_reencounter.hub.line1"}],
       "input": "q.dialogue.set_page(v.landing_page);"
     },
     {
       "id": "reencounter",
       "speaker": "npc",
-      "lines": ["hm...."],
+      "lines": [{"translate": "dialogue.voyager.dax_reencounter.reencounter.line1"}],
       "input": [
         "v.callback_dialogue = 'redwood_intro';",
         "c.npc.run_action_effect('change_dialogue_callback');",
@@ -46,19 +46,19 @@
           "type": "expression",
           "expression": "'Que? Você de novo ' + q.player.username + '?'"
         },
-        "Não aprendeu sua lição já? Volte para sua casa e desista da academia.",
-        "Você não leva jeito para isso"
+        {"translate": "dialogue.voyager.dax_reencounter.chat_lost.line2"},
+        {"translate": "dialogue.voyager.dax_reencounter.chat_lost.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Sua vitória não significa nada.",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.chat_lost.option1"},
             "action": "q.dialogue.set_page('part2');"
           },
           {
-            "text": "Estou mais forte. Não perderei para mais ninguém!",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.chat_lost.option2"},
             "action": "q.dialogue.set_page('part2');"
           }
         ]
@@ -72,19 +72,19 @@
           "type": "expression",
           "expression": "'Que? Você de novo ' + q.player.username + '?'"
         },
-        "Aquela vitória deve ter lhe subido a cabeça se acha que ainda merece essa licença.",
-        "Devolva logo ela para o professor e saia da academia em silêncio. Moleque perdedor."
+        {"translate": "dialogue.voyager.dax_reencounter.chat_won.line2"},
+        {"translate": "dialogue.voyager.dax_reencounter.chat_won.line3"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Fala grande para quem teve uma derrota ainda maior!",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.chat_won.option1"},
             "action": "q.dialogue.set_page('part2');"
           },
           {
-            "text": "Então acho que vou ter que te provar novamente porque tenho a licença.",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.chat_won.option2"},
             "action": "q.dialogue.set_page('part2');"
           }
         ]
@@ -94,15 +94,15 @@
       "id": "part2",
       "speaker": "npc",
       "lines": [
-        "Urgh... Gente como você que não sabe seu lugar é quem mais me irrita!",
-        "Dessa vez vou destruir o seu espírito para você desistir de uma vez por todas!"
+        {"translate": "dialogue.voyager.dax_reencounter.part2.line1"},
+        {"translate": "dialogue.voyager.dax_reencounter.part2.line2"}
       ],
       "input": {
         "type": "option",
         "vertical": true,
         "options": [
           {
-            "text": "Pode vir!",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.part2.option1"},
             "value": "battle",
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_met_dax2 ');",
@@ -111,7 +111,7 @@
             ]
           },
           {
-            "text": "Battle x2",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.part2.option2"},
             "value": "battle",
             "action": [
               "q.run_command('tag ' + q.player.username + ' add voyager_met_dax2 ');",
@@ -119,9 +119,8 @@
               "q.npc.start_battle(q.player, 'double');"
             ]
           },
-
           {
-            "text": "Agora não.",
+            "text": {"translate": "dialogue.voyager.dax_reencounter.part2.option3"},
             "value": "cancel",
             "action": [
               "q.dialogue.close();"

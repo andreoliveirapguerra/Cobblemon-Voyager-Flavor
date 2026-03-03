@@ -138,6 +138,9 @@ dependencies {
 	// RCT mod dependency (FORGE API PORT)
 //	modImplementation "maven.modrinth:forge-config-api-port:v21.1.6-1.21.1-Fabric"
 
+	// ALpha mod
+	modImplementation "maven.modrinth:QnWyhFGf:wVSPSTdd"
+
 	//coblemon Mega Showdown
 	modImplementation "maven.modrinth:SszvX85I:sbH1N7Fg"
 
