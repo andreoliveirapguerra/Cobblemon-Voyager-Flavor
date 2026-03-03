@@ -138,8 +138,8 @@ dependencies {
 	// RCT mod dependency (FORGE API PORT)
 //	modImplementation "maven.modrinth:forge-config-api-port:v21.1.6-1.21.1-Fabric"
 
-	//coblemon trainer
-//	modImplementation "maven.modrinth:lRwTUnD7:bsUShmbG"
+	//coblemon Mega Showdown
+	modImplementation "maven.modrinth:SszvX85I:sbH1N7Fg"
 
 	// Coblemon Structures https://modrinth.com/mod/cobblemonextrastructures/version/4E9dJQRB
 	modImplementation "maven.modrinth:IkJ2gbjT:4E9dJQRB"

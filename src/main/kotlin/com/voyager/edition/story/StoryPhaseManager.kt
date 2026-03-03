@@ -2,6 +2,7 @@ package com.voyager.edition.story
 
 import com.voyager.edition.VoyagerFlavor
 import com.voyager.edition.book.LorebookRegistry
+import com.voyager.edition.registry.VoyagerItems
 import com.voyager.edition.utils.VoyagerUtils.Companion.findSafeSurfaceSpace
 import com.voyager.edition.utils.VoyagerUtils.Companion.runCommand
 import net.minecraft.ChatFormatting

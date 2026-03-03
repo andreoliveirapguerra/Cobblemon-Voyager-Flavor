@@ -22,8 +22,9 @@ object CobbleEvent {
             // Find the Pokemon whose world entity UUID matches the interaction event
             val pokemon = CobblemonClient.storage.party.slots
                 .filter { Objects.nonNull(it) }
-                .firstOrNull { slot -> slot.entity != null && slot.entity!!.uuid == event.pokemonID }
+                .firstOrNull { slot -> slot!!.entity != null && slot.entity!!.uuid == event.pokemonID }
                 ?: return@subscribe
+
 
             val isDynamaxed = pokemon.persistentData.getBoolean("voyager_is_dynamax")
             val label = if (isDynamaxed) "voyager.ui.undynamax" else "voyager.ui.dynamax"

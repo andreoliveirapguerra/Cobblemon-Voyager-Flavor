@@ -1,9 +1,18 @@
 package com.voyager.edition.networking
 
 import com.cobblemon.mod.common.Cobblemon
+import com.cobblemon.mod.common.battles.pokemon.BattlePokemon
+import com.cobblemon.mod.common.pokemon.properties.AspectPropertyType
+import com.cobblemon.mod.common.pokemon.properties.UnaspectPropertyType
+import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemon.mod.common.util.server
+import com.github.yajatkaul.mega_showdown.codec.Effect
 import com.voyager.edition.VoyagerFlavor
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import com.github.yajatkaul.mega_showdown.gimmick.MaxGimmick
+import com.github.yajatkaul.mega_showdown.sound.MegaShowdownSounds
+import net.minecraft.sounds.SoundSource
 
 object VoyagerNetworking {
 
@@ -33,13 +42,56 @@ object VoyagerNetworking {
                 val isDynamaxed = pokemon.persistentData.getBoolean("voyager_is_dynamax")
 
                 if (isDynamaxed) {
+                    VoyagerFlavor.LOGGER.info("[Voyager] Dynamax: Pokemon ${pokemon.species.name}is Dynamaxing")
                     pokemon.persistentData.remove("voyager_is_dynamax")
-                    pokemon.aspects = pokemon.aspects - "dynamax"
-                    VoyagerFlavor.LOGGER.info("[Voyager] ${pokemon.species.name} reverted from Dynamax for ${player.name.string}")
-                } else {
+                    if (pokemon.gmaxFactor) {
+                        MaxGimmick.startGradualScaling(pokemon, 2f)
+                        Effect.getEffect(
+                            "mega_showdown:dynamax").applyEffects(
+                            pokemon,
+                            listOf("dynamax_form=gmax"),
+                            null
+                        )
+
+                    } else {
+                        MaxGimmick.startGradualScaling(pokemon, 2f)
+                        AspectPropertyType.fromString("msd:dmax")!!.apply(pokemon)
+                        Effect.getEffect("mega_showdown:dynamax").applyEffects(
+                            pokemon,
+                            listOf(),
+                            null
+                        )
+
+                    }
+                    pokemon.persistentData.putBoolean("is_max", true);
+                    player.serverLevel().playSound(
+                        null, pokemon.entity!!.getX(), pokemon.entity!!.getY(), pokemon.entity!!.getZ(),
+                        MegaShowdownSounds.DYNAMAX.get(),
+                        SoundSource.PLAYERS, 0.2f, 0.8f
+                    )
+                    VoyagerFlavor.LOGGER.info("[Voyager] ${pokemon.species.name} Dynamax for ${player.name.string}")
+
+                }
+                else {
+                    VoyagerFlavor.LOGGER.info("[Voyager] Dynamax: Pokemon ${pokemon.species.name}is UnDynamaxing")
+
                     pokemon.persistentData.putBoolean("voyager_is_dynamax", true)
-                    pokemon.aspects = pokemon.aspects + "dynamax"
-                    VoyagerFlavor.LOGGER.info("[Voyager] ${pokemon.species.name} Dynamaxed for ${player.name.string}")
+
+                    if (pokemon.gmaxFactor) {
+                        // TODO: ??
+                    } else {
+                        UnaspectPropertyType.fromString("msd:dmax")!!.apply(pokemon);
+                    }
+                    Effect.getEffect(
+                        "mega_showdown:dynamax").revertEffects(
+                        pokemon,
+                        listOf("dynamax_form=eternamax"),
+                            null
+                        )
+
+                    MaxGimmick.startGradualScalingDown(pokemon)
+                    MaxGimmick.updateScalingAnimations(server())
+                    VoyagerFlavor.LOGGER.info("[Voyager] ${pokemon.species.name} UnDynamaxed for ${player.name.string}")
                 }
             }
         }
